@@ -86,6 +86,65 @@ colours or typefaces without asking.
 
 ---
 
+## House style
+
+How the copy sounds. This is tone, not substance — it never overrides the
+compliance rules in the next section.
+
+### No em dashes in site copy
+
+No em dashes (—) anywhere in site copy or UI text: headings, body, form labels,
+buttons, alt text, meta descriptions. Use a comma, a colon or a full stop
+instead. Most em dashes are a comma doing a dramatic voice; the rest are usually
+two sentences.
+
+En dashes in numeric ranges are correct and stay: `3–6 months`, `₹10–15 lakh`,
+`H·01–H·02`. Keep hyphens in compounds (`mobile-first`, `RBI-licensed`).
+
+This rule governs strings that ship to the browser — `verticals.ts`, `site.ts`,
+component markup. It does not govern this file or code comments.
+
+### Never define Career Plus by negation
+
+Do not describe the group by what it is not. No "we are not a bank", no "this is
+not a booking engine", no "we don't sell properties ourselves". Negation makes
+the reader picture the thing being denied, and it puts an apology where the
+value should be.
+
+State what the partnership gives the customer instead:
+
+| Instead of | Write |
+|---|---|
+| "We are not a lender" | "We arrange your loan through our partner banks" |
+| "Not a booking engine" | "One conversation, and your itinerary comes back priced" |
+| "We don't own the properties" | "We open the developer's inventory to you directly" |
+
+The intermediary model is a benefit — choice across partners rather than one
+company's stock. Write it that way. Note that this is a rule about framing, not
+about disclosure: where the compliance rules below require a factual statement
+of role, that statement is made positively ("we arrange", "subject to lender
+approval") and is never dropped.
+
+### Lead with the legacy and the partner network
+
+The two lead credibility signals are:
+
+1. **The 25 plus year legacy** — the reason a first-time visitor trusts an
+   advisory group at all.
+2. **The partner network** — the banks, developers, universities and operators
+   in `site.partners`.
+
+Reach for those first in hero copy, trust strips and "Why Career Plus" blocks.
+Registration numbers (`site.registrations`: Society, RERA, GST) are proof for a
+reader who is already interested and came looking; they are supporting evidence,
+not the opening argument. Same for awards and office count.
+
+Both signals are still `TODO(client)` — `trustStats` carries `—` for years active
+and `partners` carries placeholder names. Lead with them once the client
+confirms the figures; do not invent a number to fill the gap.
+
+---
+
 ## Business context that constrains the copy
 
 Career Plus is an **intermediary in all five verticals**. It owns no inventory:
