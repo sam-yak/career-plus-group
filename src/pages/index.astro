@@ -24,7 +24,7 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section" id="services">
+  <section class="section" id="services" data-reveal="stagger">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">What we do</p>
@@ -36,8 +36,8 @@ import { verticals, notation } from '../data/verticals';
         </p>
       </div>
       <div class="grid grid--3">
-        {verticals.map((v) => (
-          <a class="card card--link" data-division={v.division} href={url(`/${v.slug}`)}>
+        {verticals.map((v, i) => (
+          <a class="card card--link" data-division={v.division} href={url(`/${v.slug}`)} style={`--i:${i}`}>
             <div class="card__head">
               <h3 style="margin:0;font-size:1.2rem">{v.name}</h3>
               <span class="notation">{notation(v)}</span>
@@ -51,12 +51,12 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section section--sand">
+  <section class="section section--sand" data-reveal="stats">
     <div class="wrap">
       <div class="trust">
         {site.trustStats.map((s) => (
           <div class="trust__stat">
-            <div class="trust__value">{s.value}</div>
+            <div class="trust__value" data-count>{s.value}</div>
             <div class="trust__label">{s.label}</div>
           </div>
         ))}
@@ -69,7 +69,7 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section section--navy">
+  <section class="section section--navy" data-reveal>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">How we work</p>
@@ -86,7 +86,7 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" data-reveal>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Partners</p>
@@ -110,7 +110,7 @@ import { verticals, notation } from '../data/verticals';
 
   {/* Closing CTA. Keeps id="enquire" so the sticky action bar in Base.astro
       and the hero button still have a target on this page. */}
-  <section class="section section--navy" id="enquire">
+  <section class="section section--navy" id="enquire" data-reveal>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Get in touch</p>
@@ -128,3 +128,60 @@ import { verticals, notation } from '../data/verticals';
   </section>
 
 </Base>
+
+<script>
+  /*
+   * Homepage scroll reveals. Astro bundles a page-level script only into the
+   * page that declares it, so this ships on / and nowhere else.
+   *
+   * One observer drives every effect. It adds `.is-visible` and unobserves;
+   * CSS does the section fade, the card stagger and the eyebrow hairline off
+   * that one class. The only extra work here is the trust counter.
+   */
+  const targets = Array.from(document.querySelectorAll('[data-reveal]'));
+  const showAll = () => targets.forEach((el) => el.classList.add('is-visible'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const DURATION = 600;
+
+  function countUp(section) {
+    if (reduced) return; // the real value is already in the DOM; leave it there
+    section.querySelectorAll('[data-count]').forEach((node) => {
+      // '25+' -> 25 and '+'. '—' has no digits and is skipped, never NaN.
+      const match = /^(\d+)(.*)$/.exec(node.textContent.trim());
+      if (!match) return;
+      const target = Number(match[1]);
+      const suffix = match[2];
+      const start = performance.now();
+      node.textContent = '0' + suffix;
+      const tick = (now) => {
+        const p = Math.min((now - start) / DURATION, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // ease-out, matches the CSS curve
+        node.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  try {
+    if (!('IntersectionObserver' in window)) {
+      showAll(); // no observer: show everything rather than hide it
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target); // one-shot: never re-hides on scroll up
+            if (entry.target.dataset.reveal === 'stats') countUp(entry.target);
+          }
+        },
+        { threshold: 0, rootMargin: '0px 0px -12% 0px' }
+      );
+      targets.forEach((el) => io.observe(el));
+    }
+  } catch (err) {
+    showAll();
+  }
+</script>

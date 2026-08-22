@@ -33,6 +33,18 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+
+  /* Homepage scroll reveals: land on the end state, skip the motion entirely.
+     `:not(:hover)` keeps the card's hover lift, which is an affordance rather
+     than an animation. The trust counter is disabled in JS, not here. */
+  [data-reveal],
+  [data-reveal] .section-head,
+  [data-reveal] .card--link:not(:hover) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-delay: 0s !important;
+  }
+  [data-reveal] .eyebrow::after { transform: scaleX(1) !important; }
 }
 
 body {
@@ -281,7 +293,7 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 
 .trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.5rem; }
 .trust__stat { border-left: 2px solid var(--gold); padding-left: 1rem; }
-.trust__value { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 600; color: var(--navy); line-height: 1; }
+.trust__value { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 600; color: var(--navy); line-height: 1; font-variant-numeric: tabular-nums; }
 .trust__label { font-size: 0.88rem; color: var(--ink-soft); margin-top: 0.35rem; }
 .trust__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
 .trust__list li { padding-left: 1.6rem; position: relative; color: inherit; }
@@ -378,3 +390,57 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
 .crumbs a { color: #c3ccdd; text-decoration: none; }
 .crumbs a:hover { color: var(--gold-light); }
 .crumbs span { opacity: 0.5; margin: 0 0.45rem; }
+
+/* ── Homepage scroll reveals ───────────────────────────────────── */
+/*
+ * One observer in index.astro toggles a single `.is-visible` class on each
+ * [data-reveal] section. Three of the four effects are pure CSS keyed off that
+ * class; only the trust counter needs JS beyond the toggle. Adding a fifth
+ * effect means adding an attribute, not another script.
+ *
+ * The hidden states live inside `@media (scripting: enabled)` deliberately: if
+ * JS is off, throws, or the browser does not know the query, the block is never
+ * applied and every section renders fully visible. Content is never hidden in
+ * the base CSS.
+ *
+ * The hero carries no [data-reveal] and is untouched, so LCP paints immediately.
+ */
+@media (scripting: enabled) {
+  /* 1. Section reveal: fade plus a slight rise. */
+  [data-reveal]:not([data-reveal='stagger']),
+  [data-reveal='stagger'] .section-head {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  [data-reveal]:not([data-reveal='stagger']).is-visible,
+  [data-reveal='stagger'].is-visible .section-head {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 2. Service cards, 80ms apart. The wrapper itself does not fade in this
+     variant, so card opacity is never multiplied by a parent fade. */
+  [data-reveal='stagger'] .card--link {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out, border-color 0.18s ease;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  [data-reveal='stagger'].is-visible .card--link { opacity: 1; transform: none; }
+  /* Hand the card back to its 0.18s hover lift once it has arrived. */
+  [data-reveal='stagger'].is-visible .card--link:hover {
+    transform: translateY(-2px);
+    transition-duration: 0.18s;
+    transition-delay: 0s;
+  }
+
+  /* 3. The gold hairline in .eyebrow draws in from the left. Scoped under
+     [data-reveal], so hero and other-page eyebrows are excluded structurally. */
+  [data-reveal] .eyebrow::after {
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 500ms ease-out 120ms;
+  }
+  [data-reveal].is-visible .eyebrow::after { transform: scaleX(1); }
+}
