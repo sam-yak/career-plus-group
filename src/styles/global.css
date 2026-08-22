@@ -78,6 +78,8 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 .section--sand { background: var(--sand); }
 .section--navy { background: var(--navy); color: #dfe4ee; }
 .section--navy h2, .section--navy h3, .section--navy h4 { color: var(--paper); }
+.section--navy .prose { color: #b6c0d4; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 .lede { font-size: var(--step-2); line-height: 1.45; color: var(--ink-soft); max-width: 34ch; }
 .prose { max-width: 62ch; color: var(--ink-soft); }

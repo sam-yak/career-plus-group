@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import EnquiryForm from '../components/EnquiryForm.astro';
 import { url } from '../lib/url';
 import { site, divisions } from '../data/site';
 import { verticals, notation } from '../data/verticals';
@@ -109,17 +108,22 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section section--sand">
+  {/* Closing CTA. Keeps id="enquire" so the sticky action bar in Base.astro
+      and the hero button still have a target on this page. */}
+  <section class="section section--navy" id="enquire">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Get in touch</p>
         <h2>Tell us what you need</h2>
         <p class="prose">
-          One form for all five business lines. Pick the service and we will route
-          your enquiry to the right team.
+          One conversation covers all five business lines, and we will point you
+          at the team that handles yours.
         </p>
       </div>
-      <EnquiryForm variant="other" heading="Group enquiry" />
+      <div class="cta-actions">
+        <a class="btn btn--primary" href={url('/contact')}>Send an enquiry</a>
+        <a class="btn btn--ghost" href={site.contact.whatsappHref}>WhatsApp us</a>
+      </div>
     </div>
   </section>
 
