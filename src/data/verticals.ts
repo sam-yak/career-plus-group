@@ -107,7 +107,7 @@ export const verticals: Vertical[] = [
     trust: [
       'A registered channel partner with direct developer tie-ups, so you see inventory straight from the source.',
       'Every project we place carries a verifiable RERA registration number.',
-      'Document verification before money moves, not after.',
+      'Every document verified while there is still time to walk away.',
       'Home loan and loan-against-property handled in-house through Fin-Serve.',
     ],
 
@@ -128,7 +128,7 @@ export const verticals: Vertical[] = [
     order: 2,
     navBlurb: 'Personal · Business · OD',
     cardBlurb: 'Five loan products arranged through our partner banks and NBFCs.',
-    heroHeading: 'The right lender, not just any lender',
+    heroHeading: 'The lender whose policy fits your profile',
     heroLead:
       'We are a loan facilitator. We understand your requirement, match it to a partner bank or NBFC whose policy actually fits your profile, and manage the file through to disbursal.',
     ctaLabel: 'Check what you qualify for',
@@ -324,7 +324,7 @@ export const verticals: Vertical[] = [
     trust: [
       'Post-arrival settlement support: accommodation, pickup and a local contact, not just a visa stamp.',
       'Education loan and forex handled in-house through our Fin-Serve division.',
-      'Scholarship identification as part of counselling, not an upsell.',
+      'Scholarship identification is built into counselling from the first session.',
       'The first counselling session is free and carries no obligation.',
     ],
 
@@ -393,7 +393,7 @@ export const verticals: Vertical[] = [
     trust: [
       'Advisory model: we plan and advise, TripCon Holidays handles fulfilment and on-ground support.',
       'Inclusions and exclusions stated in writing before you confirm anything.',
-      'Every itinerary is adjustable. Fixed packages are a starting point, not a constraint.',
+      'Every itinerary is adjustable. Fixed packages are a starting point, and most trips end up shaped around the group.',
       'Support remains available while you are travelling.',
     ],
 
