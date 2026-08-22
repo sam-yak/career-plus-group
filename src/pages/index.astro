@@ -24,8 +24,8 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section" id="services" data-reveal="stagger">
-    <div class="wrap">
+  <section class="section" id="services">
+    <div class="wrap" data-reveal="stagger">
       <div class="section-head">
         <p class="eyebrow">What we do</p>
         <h2>Five business lines, two divisions</h2>
@@ -51,8 +51,8 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section section--sand" data-reveal="stats">
-    <div class="wrap">
+  <section class="section section--sand">
+    <div class="wrap" data-reveal="stats">
       <div class="trust">
         {site.trustStats.map((s) => (
           <div class="trust__stat">
@@ -69,8 +69,8 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section section--navy" data-reveal>
-    <div class="wrap">
+  <section class="section section--navy">
+    <div class="wrap" data-reveal>
       <div class="section-head">
         <p class="eyebrow">How we work</p>
         <h2>The same four steps, whichever door you come through</h2>
@@ -86,8 +86,8 @@ import { verticals, notation } from '../data/verticals';
     </div>
   </section>
 
-  <section class="section" data-reveal>
-    <div class="wrap">
+  <section class="section">
+    <div class="wrap" data-reveal>
       <div class="section-head">
         <p class="eyebrow">Partners</p>
         <h2>We are only as good as who we work with</h2>
@@ -110,8 +110,8 @@ import { verticals, notation } from '../data/verticals';
 
   {/* Closing CTA. Keeps id="enquire" so the sticky action bar in Base.astro
       and the hero button still have a target on this page. */}
-  <section class="section section--navy" id="enquire" data-reveal>
-    <div class="wrap">
+  <section class="section section--navy" id="enquire">
+    <div class="wrap" data-reveal>
       <div class="section-head">
         <p class="eyebrow">Get in touch</p>
         <h2>Tell us what you need</h2>
@@ -126,8 +126,6 @@ import { verticals, notation } from '../data/verticals';
       </div>
     </div>
   </section>
-
-</Base>
 
 <script>
   /*
@@ -177,7 +175,7 @@ import { verticals, notation } from '../data/verticals';
             if (entry.target.dataset.reveal === 'stats') countUp(entry.target);
           }
         },
-        { threshold: 0, rootMargin: '0px 0px -12% 0px' }
+        { threshold: 0, rootMargin: '0px 0px -25% 0px' }
       );
       targets.forEach((el) => io.observe(el));
     }
@@ -185,3 +183,5 @@ import { verticals, notation } from '../data/verticals';
     showAll();
   }
 </script>
+
+</Base>
