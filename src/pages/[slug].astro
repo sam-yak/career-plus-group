@@ -1,0 +1,86 @@
+---
+/**
+ * One dynamic route generates BOTH layers of the site:
+ *   /realty-finserve, /hospitality-services   → division hubs
+ *   /real-estate, /loans, /alkaline-water …   → vertical landing pages
+ *
+ * Adding a business line to src/data/verticals.ts creates its page here
+ * automatically. No route file is ever added by hand.
+ */
+import Base from '../layouts/Base.astro';
+import VerticalPage from '../components/VerticalPage.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import { url } from '../lib/url';
+import { site, divisions, type DivisionId } from '../data/site';
+import { verticals, verticalsIn, notation } from '../data/verticals';
+
+export function getStaticPaths() {
+  const divisionPaths = Object.values(divisions).map((d) => ({
+    params: { slug: d.id },
+    props: { kind: 'division' as const, id: d.id },
+  }));
+  const verticalPaths = verticals.map((v) => ({
+    params: { slug: v.slug },
+    props: { kind: 'vertical' as const, id: v.slug },
+  }));
+  return [...divisionPaths, ...verticalPaths];
+}
+
+const { kind, id } = Astro.props;
+const vertical = kind === 'vertical' ? verticals.find((v) => v.slug === id)! : null;
+const division = kind === 'division' ? divisions[id as DivisionId] : null;
+
+const title = vertical ? vertical.name : division!.shortName;
+const description = vertical ? vertical.cardBlurb : division!.intro;
+---
+<Base title={title} description={description}>
+  {vertical && <VerticalPage vertical={vertical} />}
+
+  {division && (
+    <>
+      <section class="hero">
+        <div class="wrap">
+          <p class="crumbs"><a href={url('/')}>Home</a><span>›</span>{division.shortName}</p>
+          <p class="eyebrow"><span class="notation">{division.code}</span> Division</p>
+          <h1>{division.name}</h1>
+          <p class="hero__lead">{division.intro}</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Business lines</p>
+            <h2>{division.tagline}</h2>
+          </div>
+          <div class="grid grid--2">
+            {verticalsIn(division.id).map((v) => (
+              <a class="card card--link" data-division={division.id} href={url(`/${v.slug}`)}>
+                <div class="card__head">
+                  <h3 style="margin:0">{v.name}</h3>
+                  <span class="notation">{notation(v)}</span>
+                </div>
+                <p class="card__body">{v.cardBlurb}</p>
+                <span class="card__more">Explore {v.name} →</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--sand">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="eyebrow">Get in touch</p>
+            <h2>Not sure which team you need?</h2>
+            <p class="prose">
+              Send one enquiry and we will route it. If it turns out another part of
+              {' '}{site.name} is a better fit, we will tell you.
+            </p>
+          </div>
+          <EnquiryForm variant="other" heading={`${division.shortName} enquiry`} />
+        </div>
+      </section>
+    </>
+  )}
+</Base>

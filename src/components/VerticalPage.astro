@@ -1,0 +1,184 @@
+---
+/**
+ * THE VERTICAL TEMPLATE.
+ * Every business line renders through this file. It implements the eight-block
+ * spine from the architecture plan:
+ *   1 Hero · 2 Who it's for · 3 How it works · 4 What we offer
+ *   5 Requirements · 6 Why Career Plus · 7 FAQ · 8 Enquiry form
+ * Blocks 2, 4 and 5 collapse automatically if a vertical has no data for them.
+ */
+import { url } from '../lib/url';
+import { divisions } from '../data/site';
+import { notation, type Vertical } from '../data/verticals';
+import EnquiryForm from './EnquiryForm.astro';
+
+interface Props { vertical: Vertical; }
+const { vertical: v } = Astro.props;
+const division = divisions[v.division];
+---
+
+{/* 1 ── Hero */}
+<section class="hero">
+  <div class="wrap">
+    <p class="crumbs">
+      <a href={url('/')}>Home</a><span>›</span>
+      <a href={url(`/${division.id}`)}>{division.shortName}</a><span>›</span>
+      {v.name}
+    </p>
+    <p class="eyebrow"><span class="notation">{notation(v)}</span> {division.shortName}</p>
+    <h1>{v.heroHeading}</h1>
+    <p class="hero__lead">{v.heroLead}</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#enquire">{v.ctaLabel}</a>
+      <a class="btn btn--ghost" href="#how">How it works</a>
+    </div>
+  </div>
+</section>
+
+{/* 2 ── Who it's for */}
+{v.segments.length > 0 && (
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Who it's for</p>
+        <h2>{v.segmentsTitle}</h2>
+      </div>
+      <div class="grid grid--3">
+        {v.segments.map((s) => (
+          <div class="card">
+            <h3 style="font-size:1.15rem">{s.title}</h3>
+            <p class="card__body">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 3 ── How it works */}
+<section class="section section--sand" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Process</p>
+      <h2>{v.stepsTitle}</h2>
+    </div>
+    <div class="steps">
+      {v.steps.map((s) => (
+        <div class="step">
+          <h4>{s.title}</h4>
+          <p>{s.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* 4 ── What we offer */}
+{v.offerings.length > 0 && (
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Services</p>
+        <h2>{v.offeringsTitle}</h2>
+      </div>
+      <div class="grid grid--3">
+        {v.offerings.map((o) => (
+          <div class="card">
+            <h3 style="font-size:1.15rem">{o.title}</h3>
+            <p class="card__body">{o.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 5 ── Requirements */}
+{v.requirements.length > 0 && (
+  <section class="section section--sand">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Requirements</p>
+        <h2>{v.requirementsTitle}</h2>
+      </div>
+      {v.requirementsNote && <p class="note">{v.requirementsNote}</p>}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Category</th><th scope="col">What is needed</th></tr>
+          </thead>
+          <tbody>
+            {v.requirements.map((r) => (
+              <tr><th scope="row">{r.category}</th><td>{r.items}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 6 ── Why Career Plus */}
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid--2" style="align-items:start;gap:3rem">
+      <div>
+        <p class="eyebrow">Trust</p>
+        <h2>{v.trustTitle}</h2>
+      </div>
+      <ul class="trust__list">
+        {v.trust.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{/* 7 ── FAQ */}
+{v.faqs.length > 0 && (
+  <section class="section section--sand">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq">
+        {v.faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 8 ── Enquiry form */}
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Get in touch</p>
+      <h2>{v.ctaLabel}</h2>
+    </div>
+    <EnquiryForm
+      variant={v.formVariant}
+      heading={`${v.name} enquiry`}
+      submitLabel={v.ctaLabel}
+      disclaimer={v.disclaimer}
+    />
+  </div>
+</section>
+
+{/* Structured data — feeds Google's FAQ rich results */}
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: v.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  })}
+/>

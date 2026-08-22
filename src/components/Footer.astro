@@ -1,0 +1,48 @@
+---
+import { url } from '../lib/url';
+import { site, divisions } from '../data/site';
+import { verticalsIn } from '../data/verticals';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__cols">
+      {Object.values(divisions).map((d) => (
+        <div>
+          <h4>{d.shortName}</h4>
+          <ul>
+            {verticalsIn(d.id).map((v) => (
+              <li><a href={url(`/${v.slug}`)}>{v.name}</a></li>
+            ))}
+            <li><a href={url(`/${d.id}`)}>Division overview</a></li>
+          </ul>
+        </div>
+      ))}
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href={url('/about')}>About us</a></li>
+          <li><a href={url('/contact')}>Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach us</h4>
+        <ul>
+          <li><a href={site.contact.phoneHref}>{site.contact.phone}</a></li>
+          <li><a href={site.contact.whatsappHref}>WhatsApp</a></li>
+          <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+          <li>{site.contact.address}</li>
+          <li>{site.contact.hours}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bar">
+      <span>
+        {site.name} operates under {site.parent}
+        {site.registrations.map((r) => ` · ${r.label} ${r.value}`)}
+      </span>
+      <span>© {year} {site.name}</span>
+    </div>
+  </div>
+</footer>

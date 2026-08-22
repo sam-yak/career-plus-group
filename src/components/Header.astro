@@ -1,0 +1,48 @@
+---
+import { url } from '../lib/url';
+import { divisions } from '../data/site';
+import { verticalsIn } from '../data/verticals';
+---
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="brand" href={url('/')}>
+      <span class="brand__name">Career Plus</span>
+      <span class="brand__sub">Group</span>
+    </a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+
+    <nav class="nav" id="nav" aria-label="Primary">
+      {Object.values(divisions).map((d) => (
+        <div class="nav__item">
+          <a class="nav__link" href={url(`/${d.id}`)}>{d.shortName}</a>
+          <div class="mega">
+            {verticalsIn(d.id).map((v) => (
+              <a class="mega__link" href={url(`/${v.slug}`)}>
+                <span class="notation">{d.code}·{String(v.order).padStart(2, '0')}</span>
+                <span>
+                  <span class="mega__title">{v.name}</span>
+                  <span class="mega__blurb">{v.navBlurb}</span>
+                </span>
+              </a>
+            ))}
+            <a class="mega__all" href={url(`/${d.id}`)}>View division →</a>
+          </div>
+        </div>
+      ))}
+      <a class="nav__link" href={url('/about')}>About</a>
+      <a class="nav__link" href={url('/contact')}>Contact</a>
+      <a class="btn btn--primary nav__cta" href={url('/contact#enquire')}>Enquire now</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  burger?.addEventListener('click', () => {
+    const open = nav?.dataset.open === 'true';
+    if (nav) nav.dataset.open = String(!open);
+    burger.setAttribute('aria-expanded', String(!open));
+  });
+</script>

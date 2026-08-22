@@ -1,0 +1,266 @@
+---
+/**
+ * ONE form for the whole site. The `variant` prop pre-selects the service and
+ * reveals that vertical's extra fields. Adding a sixth business line means
+ * adding one <option> and one fieldset below — never a new form.
+ */
+import { verticals } from '../data/verticals';
+
+interface Props {
+  variant?: string;
+  heading?: string;
+  submitLabel?: string;
+  disclaimer?: string;
+}
+const {
+  variant = 'other',
+  heading = 'Tell us what you need',
+  submitLabel = 'Send enquiry',
+  disclaimer,
+} = Astro.props;
+---
+
+<div class="form" id="enquire">
+  <h3>{heading}</h3>
+  <p class="note">
+    One form for the whole group. Your enquiry goes to the team that handles this
+    specific service — usually answered the same working day.
+  </p>
+
+  <form id="enquiry-form" novalidate data-variant={variant}>
+    <div class="form__grid">
+      <div class="field">
+        <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+        <span class="field__error" data-error-for="name"></span>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+        <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel"
+               placeholder="10-digit mobile number" required />
+        <span class="field__error" data-error-for="phone"></span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" />
+        <span class="field__error" data-error-for="email"></span>
+      </div>
+
+      <div class="field">
+        <label for="city">City</label>
+        <input id="city" name="city" type="text" autocomplete="address-level2" />
+      </div>
+
+      <div class="field field--wide">
+        <label for="service">What do you need help with? <span class="req" aria-hidden="true">*</span></label>
+        <select id="service" name="service" required>
+          {verticals.map((v) => (
+            <option value={v.formVariant} selected={v.formVariant === variant}>{v.name}</option>
+          ))}
+          <option value="other" selected={variant === 'other'}>Not sure / something else</option>
+        </select>
+      </div>
+
+      {/* ── Conditional groups, shown by JS based on the service above ── */}
+
+      <div class="field field--wide" data-group="real-estate" hidden>
+        <div class="form__grid">
+          <div class="field">
+            <label for="re-intent">Buying, selling or renting?</label>
+            <select id="re-intent" name="intent">
+              <option>Buy</option><option>Sell</option><option>Rent</option><option>Lease</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="re-type">Property type</label>
+            <select id="re-type" name="propertyType">
+              <option>Flat / apartment</option><option>Villa</option>
+              <option>Plot / land</option><option>Commercial</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="re-budget">Budget range</label>
+            <input id="re-budget" name="budget" type="text" placeholder="e.g. ₹60–80 lakh" />
+          </div>
+          <div class="field">
+            <label for="re-locality">Preferred locality</label>
+            <input id="re-locality" name="locality" type="text" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--wide" data-group="loans" hidden>
+        <div class="form__grid">
+          <div class="field">
+            <label for="loan-type">Loan type</label>
+            <select id="loan-type" name="loanType">
+              <option>Personal loan</option><option>Business loan</option>
+              <option>Corporate loan</option><option>OD limit</option>
+              <option>Project loan</option><option>Loan against property</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="loan-amount">Amount required</label>
+            <input id="loan-amount" name="loanAmount" type="text" placeholder="e.g. ₹20 lakh" />
+          </div>
+          <div class="field">
+            <label for="employment">Employment type</label>
+            <select id="employment" name="employment">
+              <option>Salaried</option><option>Self-employed</option><option>Company</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--wide" data-group="water" hidden>
+        <div class="form__grid">
+          <div class="field">
+            <label for="business-name">Business name</label>
+            <input id="business-name" name="businessName" type="text" />
+          </div>
+          <div class="field">
+            <label for="sector">Sector</label>
+            <select id="sector" name="sector">
+              <option>Hotel / resort</option><option>Restaurant / café</option>
+              <option>Corporate office</option><option>Gym / wellness</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="volume">Estimated monthly volume</label>
+            <input id="volume" name="volume" type="text" placeholder="e.g. 200 cases" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--wide" data-group="study" hidden>
+        <div class="form__grid">
+          <div class="field">
+            <label for="country">Preferred country</label>
+            <select id="country" name="country">
+              <option>USA</option><option>UK</option><option>Canada</option>
+              <option>Australia</option><option>Germany</option><option>Not decided</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="level">Course level</label>
+            <select id="level" name="level">
+              <option>Undergraduate</option><option>Postgraduate</option><option>Doctoral</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="intake">Intended intake</label>
+            <input id="intake" name="intake" type="text" placeholder="e.g. Fall 2027" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--wide" data-group="travel" hidden>
+        <div class="form__grid">
+          <div class="field">
+            <label for="destination">Destination</label>
+            <input id="destination" name="destination" type="text" placeholder="Or just a rough idea" />
+          </div>
+          <div class="field">
+            <label for="dates">Approximate dates</label>
+            <input id="dates" name="dates" type="text" placeholder="e.g. mid-December, 6 nights" />
+          </div>
+          <div class="field">
+            <label for="travellers">Number of travellers</label>
+            <input id="travellers" name="travellers" type="text" />
+          </div>
+          <div class="field">
+            <label for="trip-budget">Budget range</label>
+            <input id="trip-budget" name="tripBudget" type="text" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field field--wide">
+        <label for="message">Anything else we should know?</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+    </div>
+
+    {/* Honeypot — real people never fill this in. */}
+    <div class="hp" aria-hidden="true">
+      <label for="company-website">Leave this empty</label>
+      <input id="company-website" name="companyWebsite" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="form__foot">
+      <button class="btn btn--primary" type="submit">{submitLabel}</button>
+      <span class="note" style="margin:0">We never share your details without your consent.</span>
+    </div>
+
+    <div class="form__status" id="form-status" hidden role="status"></div>
+  </form>
+
+  {disclaimer && <p class="form__smallprint">{disclaimer}</p>}
+</div>
+
+<script>
+  const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
+  if (form) {
+    const service = form.querySelector('#service') as HTMLSelectElement;
+    const groups = Array.from(form.querySelectorAll<HTMLElement>('[data-group]'));
+    const status = document.getElementById('form-status') as HTMLElement;
+
+    const syncGroups = () => {
+      groups.forEach((g) => { g.hidden = g.dataset.group !== service.value; });
+    };
+    service.addEventListener('change', syncGroups);
+    syncGroups();
+
+    const setError = (name: string, msg: string) => {
+      const el = form.querySelector(`[data-error-for="${name}"]`);
+      if (el) el.textContent = msg;
+    };
+    const clearErrors = () => form
+      .querySelectorAll('.field__error')
+      .forEach((e) => (e.textContent = ''));
+
+    form.addEventListener('input', clearErrors);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      if (data.companyWebsite) return; // bot
+
+      let ok = true;
+      if (!data.name?.trim()) { setError('name', 'Enter your name so we know who to call back.'); ok = false; }
+      if (!/^[6-9]\d{9}$/.test((data.phone || '').replace(/\D/g, '').slice(-10))) {
+        setError('phone', 'Enter a valid 10-digit Indian mobile number.'); ok = false;
+      }
+      if (data.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) {
+        setError('email', 'Check the email address.'); ok = false;
+      }
+      if (!ok) {
+        (form.querySelector('.field__error:not(:empty)')
+          ?.closest('.field')
+          ?.querySelector('input,select') as HTMLElement)?.focus();
+        return;
+      }
+
+      // ── DEMO MODE ────────────────────────────────────────────────────
+      // No backend yet. Replace this block with a POST to Formspree,
+      // Web3Forms, or your own endpoint. See README § Wiring up the form.
+      console.log('Lead captured (demo):', {
+        ...data,
+        sourcePage: window.location.pathname,
+        timestamp: new Date().toISOString(),
+      });
+      status.hidden = false;
+      status.textContent =
+        'Thanks — in the live site this would reach our ' +
+        (service.options[service.selectedIndex]?.text ?? '') +
+        ' team. This preview logs the enquiry to the browser console instead.';
+      form.reset();
+      syncGroups();
+      status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+</script>
