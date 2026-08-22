@@ -134,14 +134,22 @@ The two lead credibility signals are:
 2. **The partner network** — the banks, developers, universities and operators
    in `site.partners`.
 
-Reach for those first in hero copy, trust strips and "Why Career Plus" blocks.
+Reach for those first in homepage hero copy and the homepage trust strip.
 Registration numbers (`site.registrations`: Society, RERA, GST) are proof for a
 reader who is already interested and came looking; they are supporting evidence,
 not the opening argument. Same for awards and office count.
 
-Both signals are still `TODO(client)` — `trustStats` carries `—` for years active
-and `partners` carries placeholder names. Lead with them once the client
-confirms the figures; do not invent a number to fill the gap.
+**The legacy is the society's, and it is homepage-only.** The five business
+lines are new. Put "25+ years" next to a vertical and it reads as 25 years of
+broking property or arranging loans, which is not true of any of them. So:
+`site.legacy` appears on `index.astro` and nowhere else, always tied to
+`site.parent`, and the number never enters `verticals.ts`. On a vertical page
+the credibility argument is the partner network and the specifics of the
+process, not tenure.
+
+The partner network is still `TODO(client)`: `partners` carries placeholder
+names. Years active is confirmed at `yearsActive` in `site.ts`; clients served
+still shows `—`. Do not invent a number to fill a gap.
 
 ---
 

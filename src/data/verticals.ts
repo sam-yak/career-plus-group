@@ -105,7 +105,7 @@ export const verticals: Vertical[] = [
 
     trustTitle: 'Why buyers work with us',
     trust: [
-      'Registered channel partner with developer tie-ups, not an open listing marketplace.',
+      'A registered channel partner with direct developer tie-ups, so you see inventory straight from the source.',
       'Every project we place carries a verifiable RERA registration number.',
       'Document verification before money moves, not after.',
       'Home loan and loan-against-property handled in-house through Fin-Serve.',
@@ -174,7 +174,7 @@ export const verticals: Vertical[] = [
 
     trustTitle: 'How we work',
     trust: [
-      'We are a facilitator working with RBI-regulated banks and NBFCs. We do not lend ourselves.',
+      'Our RBI-regulated partner banks and NBFCs provide the capital. We know which of them says yes to which profile.',
       'Your file is pre-checked against lender policy before submission, so rejections are rarer.',
       'Indicative rates, processing fees and foreclosure charges are disclosed upfront.',
       'Your information is never shared with a lender without your consent.',
@@ -220,7 +220,7 @@ export const verticals: Vertical[] = [
       { title: 'Tell us your volume', body: 'Sector, city and an estimate of monthly consumption.' },
       { title: 'We quote by tier', body: 'Pricing is per case, tiered by monthly volume, not per bottle.' },
       { title: 'Trial delivery', body: 'A first consignment so your team can assess the product in situ.' },
-      { title: 'Standing schedule', body: 'A recurring delivery cycle and a named account manager. No lock-in.' },
+      { title: 'Standing schedule', body: 'A recurring delivery cycle and a named account manager, adjustable month to month.' },
     ],
 
     offeringsTitle: 'What is available',
@@ -249,7 +249,7 @@ export const verticals: Vertical[] = [
 
     trustTitle: 'Why procurement teams choose us',
     trust: [
-      'No lock-in contract. Supply continues because it works, not because you are tied in.',
+      'Month-to-month supply. It continues because the product and the service earn it.',
       'Volume pricing quoted per case, with tiers published up front.',
       'Private-label bottling available: your brand, our logistics.',
       'A dedicated account manager rather than a general enquiry line.',
@@ -275,7 +275,7 @@ export const verticals: Vertical[] = [
     order: 2,
     navBlurb: 'Admissions · Visa · Settlement',
     cardBlurb: 'Admissions, visa and settlement support: from first counselling to arrival.',
-    heroHeading: 'We do not stop at the visa',
+    heroHeading: 'We stay past the visa',
     heroLead:
       'Most consultancies finish when your visa is stamped. We arrange your accommodation, meet you at the airport, and give you a local contact for the first months, because that is when students actually struggle.',
     ctaLabel: 'Book a free counselling session',
@@ -347,7 +347,7 @@ export const verticals: Vertical[] = [
     cardBlurb: 'Curated domestic and international trips, planned with you and fulfilled by TripCon Holidays.',
     heroHeading: 'We plan. TripCon Holidays fulfils.',
     heroLead:
-      'Not a booking engine. You tell us what the trip is for, we build options around it, and once you confirm, our partner handles the bookings and stays reachable while you travel.',
+      'Every trip is built to a brief. You tell us what the trip is for, we build options around it, and once you confirm, our partner handles the bookings and stays reachable while you travel.',
     ctaLabel: 'Plan my trip',
     formVariant: 'travel',
 

@@ -1,8 +1,11 @@
 /**
- * Years the group has been operating. Single source of truth: page copy
+ * Years the PARENT SOCIETY has been operating. Single source of truth: copy
  * references `site.legacy` (or `site.yearsActive`), never a literal "25".
- * Bump this one number and the hero, the About page and the trust strip
- * all follow.
+ *
+ * SCOPE: homepage only. The five business lines are new, so this number must
+ * never appear on a vertical page or in `verticals.ts` — next to a vertical it
+ * reads as "25 years of doing this", which is not true of any of them. It is
+ * the society's advisory record, and it is framed that way wherever it appears.
  */
 const yearsActive = 25;
 
@@ -11,10 +14,10 @@ export const site = {
   parent: 'Career Plus Educational Society',
   tagline: 'Property, finance, education and travel, under one roof.',
   positioning:
-    'A group of advisory businesses that connect you to the right partner: banks, builders, universities and operators. We stay with you until it is done.',
+    'A group of advisory businesses that know which lender, which builder and which university fits a given profile, and stay with you until it is done.',
 
   yearsActive,
-  /** Lead credibility signal. Use this in copy rather than writing the number out. */
+  /** Homepage-only credibility signal, and always tied to `parent`. See the note on `yearsActive`. */
   legacy: `${yearsActive}+ years`,
 
   // TODO(client): replace every placeholder below with real details.
