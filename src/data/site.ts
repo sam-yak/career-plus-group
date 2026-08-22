@@ -1,9 +1,21 @@
+/**
+ * Years the group has been operating. Single source of truth: page copy
+ * references `site.legacy` (or `site.yearsActive`), never a literal "25".
+ * Bump this one number and the hero, the About page and the trust strip
+ * all follow.
+ */
+const yearsActive = 25;
+
 export const site = {
   name: 'Career Plus Group',
   parent: 'Career Plus Educational Society',
   tagline: 'Property, finance, education and travel, under one roof.',
   positioning:
     'A group of advisory businesses that connect you to the right partner: banks, builders, universities and operators. We stay with you until it is done.',
+
+  yearsActive,
+  /** Lead credibility signal. Use this in copy rather than writing the number out. */
+  legacy: `${yearsActive}+ years`,
 
   // TODO(client): replace every placeholder below with real details.
   contact: {
@@ -22,9 +34,10 @@ export const site = {
     { label: 'GST No.', value: 'PENDING' },
   ],
 
-  // Homepage trust strip. TODO(client): replace with verified figures.
+  // Homepage trust strip. Years active is confirmed; business lines and
+  // divisions are structural facts. TODO(client): clients served.
   trustStats: [
-    { value: '—', label: 'Years active' },
+    { value: `${yearsActive}+`, label: 'Years active' },
     { value: '—', label: 'Clients served' },
     { value: '5', label: 'Business lines' },
     { value: '2', label: 'Divisions' },
