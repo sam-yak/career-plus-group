@@ -32,7 +32,7 @@ import { verticalsIn, notation } from '../data/verticals';
             there, somewhere to live. A hotel client needed supply.
           </p>
           <p>
-            Rather than send people elsewhere, the group added the capability —
+            Rather than send people elsewhere, the group added the capability,
             and organised it so each line has real specialists rather than
             generalists covering everything badly.
           </p>
@@ -62,7 +62,7 @@ import { verticalsIn, notation } from '../data/verticals';
             <p class="card__body">{d.intro}</p>
             <ul class="trust__list" style="margin-top:1.2rem">
               {verticalsIn(d.id).map((v) => (
-                <li><a href={url(`/${v.slug}`)}>{v.name}</a> — <span style="color:var(--ink-soft)">{v.navBlurb}</span></li>
+                <li><a href={url(`/${v.slug}`)}>{v.name}</a>: <span style="color:var(--ink-soft)">{v.navBlurb}</span></li>
               ))}
             </ul>
           </div>

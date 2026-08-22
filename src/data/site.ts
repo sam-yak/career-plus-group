@@ -1,9 +1,9 @@
 export const site = {
   name: 'Career Plus Group',
   parent: 'Career Plus Educational Society',
-  tagline: 'Property, finance, education and travel — under one roof.',
+  tagline: 'Property, finance, education and travel, under one roof.',
   positioning:
-    'A group of advisory businesses that connect you to the right partner — banks, builders, universities and operators — and stay with you until it is done.',
+    'A group of advisory businesses that connect you to the right partner: banks, builders, universities and operators. We stay with you until it is done.',
 
   // TODO(client): replace every placeholder below with real details.
   contact: {
@@ -12,7 +12,7 @@ export const site = {
     whatsapp: '+91 00000 00000',
     whatsappHref: 'https://wa.me/910000000000',
     email: 'enquiry@careerplusgroup.in',
-    address: 'Office address line 1, City, State — PIN',
+    address: 'Office address line 1, City, State, PIN',
     hours: 'Mon–Sat, 10:00 – 19:00',
   },
 
@@ -64,7 +64,7 @@ export const divisions: Record<DivisionId, {
     shortName: 'Realty & Fin-Serve',
     tagline: 'Property and capital.',
     intro:
-      'The division that handles what you own and what funds it — buying, selling and leasing property, and arranging finance through our partner banks and NBFCs.',
+      'The division that handles what you own and what funds it: buying, selling and leasing property, and arranging finance through our partner banks and NBFCs.',
   },
   'hospitality-services': {
     id: 'hospitality-services',
@@ -73,6 +73,6 @@ export const divisions: Record<DivisionId, {
     shortName: 'Hospitality & Services',
     tagline: 'Supply, study and travel.',
     intro:
-      'The division that serves businesses and families — bulk alkaline water supply to hospitality, end-to-end study abroad support, and curated travel planning.',
+      'The division that serves businesses and families: bulk alkaline water supply to hospitality, end-to-end study abroad support, and curated travel planning.',
   },
 };

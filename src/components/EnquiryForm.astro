@@ -2,7 +2,7 @@
 /**
  * ONE form for the whole site. The `variant` prop pre-selects the service and
  * reveals that vertical's extra fields. Adding a sixth business line means
- * adding one <option> and one fieldset below — never a new form.
+ * adding one <option> and one fieldset below. Never a new form.
  */
 import { verticals } from '../data/verticals';
 
@@ -24,7 +24,7 @@ const {
   <h3>{heading}</h3>
   <p class="note">
     One form for the whole group. Your enquiry goes to the team that handles this
-    specific service — usually answered the same working day.
+    specific service, usually answered the same working day.
   </p>
 
   <form id="enquiry-form" novalidate data-variant={variant}>
@@ -183,7 +183,7 @@ const {
       </div>
     </div>
 
-    {/* Honeypot — real people never fill this in. */}
+    {/* Honeypot: real people never fill this in. */}
     <div class="hp" aria-hidden="true">
       <label for="company-website">Leave this empty</label>
       <input id="company-website" name="companyWebsite" type="text" tabindex="-1" autocomplete="off" />
@@ -255,7 +255,7 @@ const {
       });
       status.hidden = false;
       status.textContent =
-        'Thanks — in the live site this would reach our ' +
+        'Thanks. In the live site this would reach our ' +
         (service.options[service.selectedIndex]?.text ?? '') +
         ' team. This preview logs the enquiry to the browser console instead.';
       form.reset();
