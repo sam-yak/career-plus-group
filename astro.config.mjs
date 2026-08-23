@@ -8,7 +8,7 @@ import { defineConfig } from 'astro/config';
 //   site: 'https://careerplusgroup.in',    base: '/'
 // ────────────────────────────────────────────────────────────────────────
 export default defineConfig({
-  site: 'https://USERNAME.github.io',
+  site: 'https://sam-yak.github.io',
   base: '/career-plus-group',
   trailingSlash: 'ignore',
 });

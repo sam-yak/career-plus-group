@@ -1,0 +1,5 @@
+# Pre-launch. Effective only on the real domain (careerplusgroup.in).
+# On the GitHub Pages project path this file is NOT read by crawlers; the
+# noindex meta tag in src/layouts/Base.astro is what blocks indexing there.
+User-agent: *
+Disallow: /
