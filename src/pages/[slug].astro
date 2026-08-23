@@ -9,7 +9,6 @@
  */
 import Base from '../layouts/Base.astro';
 import VerticalPage from '../components/VerticalPage.astro';
-import EnquiryForm from '../components/EnquiryForm.astro';
 import { url } from '../lib/url';
 import { site, divisions, type DivisionId } from '../data/site';
 import { verticals, verticalsIn, notation } from '../data/verticals';
@@ -68,17 +67,23 @@ const description = vertical ? vertical.cardBlurb : division!.intro;
         </div>
       </section>
 
-      <section class="section section--sand">
+      {/* Closing CTA rather than a form: the enquiry form belongs on the vertical
+          pages, where it is specific to one business line, and on /contact. Keeps
+          id="enquire" so the sticky action bar in Base.astro still has a target. */}
+      <section class="section section--navy" id="enquire">
         <div class="wrap">
           <div class="section-head">
             <p class="eyebrow">Get in touch</p>
-            <h2>Not sure which team you need?</h2>
+            <h2>Talk to the {division.shortName} team</h2>
             <p class="prose">
-              Send one enquiry and we will route it. If it turns out another part of
-              {' '}{site.name} is a better fit, we will tell you.
+              Pick the business line above to send an enquiry straight to the people
+              who handle it, or reach us directly and we will route it for you.
             </p>
           </div>
-          <EnquiryForm variant="other" heading={`${division.shortName} enquiry`} />
+          <div class="cta-actions">
+            <a class="btn btn--primary" href={url('/contact')}>Send an enquiry</a>
+            <a class="btn btn--ghost" href={site.contact.whatsappHref}>WhatsApp us</a>
+          </div>
         </div>
       </section>
     </>

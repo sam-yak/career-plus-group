@@ -1,8 +1,17 @@
 ---
 /**
- * ONE form for the whole site. The `variant` prop pre-selects the service and
- * reveals that vertical's extra fields. Adding a sixth business line means
- * adding one <option> and one fieldset below. Never a new form.
+ * ONE form for the whole site. Two modes, same component:
+ *
+ *   variant = a formVariant ('loans', 'travel', ...)
+ *     A single-service form. The picker is replaced by a hidden input, and only
+ *     that vertical's fieldset is rendered, visible without JS.
+ *
+ *   variant = 'other'  (contact page, division hubs)
+ *     The full picker with every service, and all fieldsets rendered hidden,
+ *     revealed by JS as the selection changes.
+ *
+ * Adding a sixth business line still means adding one <option> (automatic, it
+ * comes from the verticals array) and one fieldset below. Never a new form.
  */
 import { verticals } from '../data/verticals';
 
@@ -18,16 +27,24 @@ const {
   submitLabel = 'Send enquiry',
   disclaimer,
 } = Astro.props;
+
+/** The vertical this form is locked to, or undefined for the full picker. */
+const active = verticals.find((v) => v.formVariant === variant);
+/** True on a vertical page: one service, no picker, one fieldset. */
+const single = Boolean(active);
+/** Render a fieldset only when it is the active one, or when picking is allowed. */
+const showGroup = (group: string) => !single || variant === group;
 ---
 
 <div class="form" id="enquire">
   <h3>{heading}</h3>
   <p class="note">
-    One form for the whole group. Your enquiry goes to the team that handles this
-    specific service, usually answered the same working day.
+    {single
+      ? `Your enquiry goes straight to the ${active!.name} team, usually answered the same working day.`
+      : 'One form for the whole group. Your enquiry goes to the team that handles this specific service, usually answered the same working day.'}
   </p>
 
-  <form id="enquiry-form" novalidate data-variant={variant}>
+  <form id="enquiry-form" novalidate data-variant={variant} data-service-label={active ? active.name : ""}>
     <div class="form__grid">
       <div class="field">
         <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
@@ -53,19 +70,24 @@ const {
         <input id="city" name="city" type="text" autocomplete="address-level2" />
       </div>
 
-      <div class="field field--wide">
-        <label for="service">What do you need help with? <span class="req" aria-hidden="true">*</span></label>
-        <select id="service" name="service" required>
-          {verticals.map((v) => (
-            <option value={v.formVariant} selected={v.formVariant === variant}>{v.name}</option>
-          ))}
-          <option value="other" selected={variant === 'other'}>Not sure / something else</option>
-        </select>
-      </div>
+      {single ? (
+        <input type="hidden" name="service" value={variant} />
+      ) : (
+        <div class="field field--wide">
+          <label for="service">What do you need help with? <span class="req" aria-hidden="true">*</span></label>
+          <select id="service" name="service" required>
+            {verticals.map((v) => (
+              <option value={v.formVariant} selected={v.formVariant === variant}>{v.name}</option>
+            ))}
+            <option value="other" selected={variant === 'other'}>Not sure / something else</option>
+          </select>
+        </div>
+      )}
 
       {/* ── Conditional groups, shown by JS based on the service above ── */}
 
-      <div class="field field--wide" data-group="real-estate" hidden>
+      {showGroup('real-estate') && (
+      <div class="field field--wide" data-group="real-estate" hidden={!single}>
         <div class="form__grid">
           <div class="field">
             <label for="re-intent">Buying, selling or renting?</label>
@@ -90,8 +112,10 @@ const {
           </div>
         </div>
       </div>
+      )}
 
-      <div class="field field--wide" data-group="loans" hidden>
+      {showGroup('loans') && (
+      <div class="field field--wide" data-group="loans" hidden={!single}>
         <div class="form__grid">
           <div class="field">
             <label for="loan-type">Loan type</label>
@@ -113,8 +137,10 @@ const {
           </div>
         </div>
       </div>
+      )}
 
-      <div class="field field--wide" data-group="water" hidden>
+      {showGroup('water') && (
+      <div class="field field--wide" data-group="water" hidden={!single}>
         <div class="form__grid">
           <div class="field">
             <label for="business-name">Business name</label>
@@ -133,8 +159,10 @@ const {
           </div>
         </div>
       </div>
+      )}
 
-      <div class="field field--wide" data-group="study" hidden>
+      {showGroup('study') && (
+      <div class="field field--wide" data-group="study" hidden={!single}>
         <div class="form__grid">
           <div class="field">
             <label for="country">Preferred country</label>
@@ -155,8 +183,10 @@ const {
           </div>
         </div>
       </div>
+      )}
 
-      <div class="field field--wide" data-group="travel" hidden>
+      {showGroup('travel') && (
+      <div class="field field--wide" data-group="travel" hidden={!single}>
         <div class="form__grid">
           <div class="field">
             <label for="destination">Destination</label>
@@ -176,6 +206,7 @@ const {
           </div>
         </div>
       </div>
+      )}
 
       <div class="field field--wide">
         <label for="message">Anything else we should know?</label>
@@ -203,15 +234,20 @@ const {
 <script>
   const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
   if (form) {
-    const service = form.querySelector('#service') as HTMLSelectElement;
+    // Absent on a vertical page, where the service is fixed and sent as a
+    // hidden input. Everything below has to cope with it being null.
+    const service = form.querySelector('#service') as HTMLSelectElement | null;
     const groups = Array.from(form.querySelectorAll<HTMLElement>('[data-group]'));
     const status = document.getElementById('form-status') as HTMLElement;
 
     const syncGroups = () => {
+      if (!service) return; // single-service form: its one group is already visible
       groups.forEach((g) => { g.hidden = g.dataset.group !== service.value; });
     };
-    service.addEventListener('change', syncGroups);
-    syncGroups();
+    if (service) {
+      service.addEventListener('change', syncGroups);
+      syncGroups();
+    }
 
     const setError = (name: string, msg: string) => {
       const el = form.querySelector(`[data-error-for="${name}"]`);
@@ -254,9 +290,12 @@ const {
         timestamp: new Date().toISOString(),
       });
       status.hidden = false;
+      const serviceLabel = service
+        ? (service.options[service.selectedIndex]?.text ?? '')
+        : (form.dataset.serviceLabel ?? '');
       status.textContent =
         'Thanks. In the live site this would reach our ' +
-        (service.options[service.selectedIndex]?.text ?? '') +
+        serviceLabel +
         ' team. This preview logs the enquiry to the browser console instead.';
       form.reset();
       syncGroups();
