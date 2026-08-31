@@ -185,6 +185,9 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   color: var(--navy); text-decoration: none; border-radius: var(--radius);
 }
 .nav__link:hover { color: var(--gold); }
+/* Marks a nav item that leaves the site, so the arrow is not a surprise. */
+.nav__link--external { display: inline-flex; align-items: baseline; gap: 0.25rem; }
+.nav__ext { font-size: 0.8em; color: var(--gold); }
 
 .mega {
   position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);

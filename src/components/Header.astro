@@ -1,6 +1,6 @@
 ---
 import { url } from '../lib/url';
-import { divisions } from '../data/site';
+import { site, divisions } from '../data/site';
 import { verticalsIn } from '../data/verticals';
 ---
 <header class="header">
@@ -30,6 +30,13 @@ import { verticalsIn } from '../data/verticals';
           </div>
         </div>
       ))}
+      {/* Leaves the site: the education arm runs its own. Not a `url()` link. */}
+      <a
+        class="nav__link nav__link--external"
+        href={site.education.href}
+        target="_blank"
+        rel="noopener"
+      >{site.education.shortName}<span class="nav__ext" aria-hidden="true">&#8599;</span></a>
       <a class="nav__link" href={url('/about')}>About</a>
       <a class="nav__link" href={url('/contact')}>Contact</a>
       <a class="btn btn--primary nav__cta" href={url('/contact#enquire')}>Enquire now</a>
