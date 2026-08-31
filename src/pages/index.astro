@@ -9,7 +9,7 @@ import { verticals, notation } from '../data/verticals';
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow">{site.legacy} under {site.parent}</p>
-      <h1>One group. Five ways forward.</h1>
+      <h1>One group. Many ways forward.</h1>
       <p class="hero__lead">{site.positioning}</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="#enquire">Talk to us</a>
@@ -21,6 +21,16 @@ import { verticals, notation } from '../data/verticals';
         about which of them fits a given profile, and stays accountable for the
         outcome.
       </p>
+
+      {/* The founding business. Links out to its own site: see the note on
+          `site.education`. Never turn this into an internal page. */}
+      <a class="origin" href={site.education.href} target="_blank" rel="noopener">
+        <span class="origin__mark">{site.education.name}</span>
+        <span class="origin__text">
+          {site.education.origin}
+          <span class="origin__more">Visit the education site &#8599;</span>
+        </span>
+      </a>
     </div>
   </section>
 
@@ -28,7 +38,7 @@ import { verticals, notation } from '../data/verticals';
     <div class="wrap" data-reveal="stagger">
       <div class="section-head">
         <p class="eyebrow">What we do</p>
-        <h2>Five business lines, two divisions</h2>
+        <h2>Many business lines, two divisions</h2>
         <p class="prose">
           Each line runs its own specialist team. The notation tells you which
           division you are entering: <strong>R</strong> for Realty &amp; Fin-Serve,
@@ -47,6 +57,25 @@ import { verticals, notation } from '../data/verticals';
             <span class="card__more">Explore →</span>
           </a>
         ))}
+
+        {/* Sixth card, but not a sixth vertical: it leaves the site. Deliberately
+            carries no R·/H· notation, because the notation encodes a position
+            inside a division and education sits outside both. */}
+        <a
+          class="card card--link card--external"
+          href={site.education.href}
+          target="_blank"
+          rel="noopener"
+          style={`--i:${verticals.length}`}
+        >
+          <div class="card__head">
+            <h3 style="margin:0;font-size:1.2rem">{site.education.shortName}</h3>
+            <span class="notation">&#8599;</span>
+          </div>
+          <p class="card__body">{site.education.blurb}</p>
+          <span class="card__tag">Under {site.parent}</span>
+          <span class="card__more">Visit careerplusonline.com →</span>
+        </a>
       </div>
     </div>
   </section>
@@ -116,8 +145,8 @@ import { verticals, notation } from '../data/verticals';
         <p class="eyebrow">Get in touch</p>
         <h2>Tell us what you need</h2>
         <p class="prose">
-          One conversation covers all five business lines, and we will point you
-          at the team that handles yours.
+          One conversation covers every business line, and we will point you at
+          the team that handles yours.
         </p>
       </div>
       <div class="cta-actions">
@@ -145,7 +174,7 @@ import { verticals, notation } from '../data/verticals';
   function countUp(section) {
     if (reduced) return; // the real value is already in the DOM; leave it there
     section.querySelectorAll('[data-count]').forEach((node) => {
-      // '25+' -> 25 and '+'. '—' has no digits and is skipped, never NaN.
+      // '30+' -> 30 and '+'. '—' has no digits and is skipped, never NaN.
       const match = /^(\d+)(.*)$/.exec(node.textContent.trim());
       if (!match) return;
       const target = Number(match[1]);

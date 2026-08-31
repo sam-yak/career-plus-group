@@ -1,13 +1,13 @@
 /**
  * Years the PARENT SOCIETY has been operating. Single source of truth: copy
- * references `site.legacy` (or `site.yearsActive`), never a literal "25".
+ * references `site.legacy` (or `site.yearsActive`), never a literal "30".
  *
- * SCOPE: homepage only. The five business lines are new, so this number must
+ * SCOPE: homepage only. The group's business lines are new, so this number must
  * never appear on a vertical page or in `verticals.ts` — next to a vertical it
- * reads as "25 years of doing this", which is not true of any of them. It is
+ * reads as "30 years of doing this", which is not true of any of them. It is
  * the society's advisory record, and it is framed that way wherever it appears.
  */
-const yearsActive = 25;
+const yearsActive = 30;
 
 export const site = {
   name: 'Career Plus Group',
@@ -20,14 +20,32 @@ export const site = {
   /** Homepage-only credibility signal, and always tied to `parent`. See the note on `yearsActive`. */
   legacy: `${yearsActive}+ years`,
 
-  // TODO(client): replace every placeholder below with real details.
   contact: {
-    phone: '+91 00000 00000',
-    phoneHref: 'tel:+910000000000',
-    whatsapp: '+91 00000 00000',
-    whatsappHref: 'https://wa.me/910000000000',
-    email: 'enquiry@careerplusgroup.in',
-    address: 'Office address line 1, City, State, PIN',
+    /** Primary line. Used by the sticky action bar, which has room for one number. */
+    phone: '+91 11 2765 4588',
+    phoneHref: 'tel:+911127654588',
+
+    /**
+     * The full switchboard: two Delhi landlines, then two mobiles.
+     *
+     * careerplusonline.com lists the mobiles as "+91-11-9811069629". That is not
+     * a dialable number: 11 is the Delhi STD code, and a mobile already carries
+     * its own ten digits, so the prefixed version is twelve digits long and a
+     * tel: link built from it fails. They are written correctly here. The
+     * education site should be corrected to match.
+     */
+    phones: [
+      { display: '+91 11 2765 4588', href: 'tel:+911127654588' },
+      { display: '+91 11 2765 2829', href: 'tel:+911127652829' },
+      { display: '+91 98110 69629', href: 'tel:+919811069629' },
+      { display: '+91 98910 86435', href: 'tel:+919891086435' },
+    ],
+
+    whatsapp: '+91 93100 69778',
+    whatsappHref: 'https://wa.me/919310069778',
+    /* TODO(client): a group-domain address once careerplusgroup.in has mail. */
+    email: 'contact@careerplusonline.com',
+    address: '301/A-37-38-39, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
     hours: 'Mon–Sat, 10:00 – 19:00',
   },
 
@@ -37,12 +55,16 @@ export const site = {
     { label: 'GST No.', value: 'PENDING' },
   ],
 
-  // Homepage trust strip. Years active is confirmed; business lines and
-  // divisions are structural facts. TODO(client): clients served.
+  // Homepage trust strip. Years active is confirmed; divisions are a structural
+  // fact. TODO(client): clients served.
+  //
+  // There is deliberately no "business lines" count here. The group keeps adding
+  // lines, so any number baked into copy or a stat tile goes stale the day a new
+  // one launches. Everywhere the site used to say "five", it now says "many" or
+  // "every". Do not reintroduce a count.
   trustStats: [
     { value: `${yearsActive}+`, label: 'Years active' },
     { value: '—', label: 'Clients served' },
-    { value: '5', label: 'Business lines' },
     { value: '2', label: 'Divisions' },
   ],
 
@@ -54,6 +76,33 @@ export const site = {
     { group: 'Universities', names: ['University partners pending'] },
     { group: 'Travel', names: ['TripCon Holidays'] },
   ],
+
+  /**
+   * THE FOUNDING BUSINESS.
+   *
+   * Career Plus Online Education is the coaching arm that runs under the same
+   * society, and it keeps its own website and its own enquiry funnel. So it is
+   * LINKED, never re-hosted: no entry in `verticals.ts`, no generated page, no
+   * duplicated course copy that would compete with the live site for the same
+   * searches. Every reference to it on this site points at `education.href`.
+   *
+   * It appears in exactly three places, all reading from this object: the
+   * homepage hero origin line, the "What we do" card grid, and the footer.
+   */
+  education: {
+    name: 'Career Plus Online Education',
+    shortName: 'Education',
+    // TODO(client): high-resolution logo. The only asset on the live site is a
+    // 127px PNG in red and blue, which is too small to place next to Cinzel and
+    // fights the navy-and-gold palette. Until the original artwork arrives this
+    // renders as a type lockup, the same way partner logos are pending.
+    logo: null,
+    href: 'https://careerplusonline.com',
+    blurb:
+      'Classroom and online coaching for UPSC, SSC, banking, CLAT, NEET and IIT-JEE, run from Delhi under the same society.',
+    // Homepage hero: ties the legacy to something the visitor can go and look at.
+    origin: 'The business the group grew out of, still running and still enrolling.',
+  },
 
   howItWorks: [
     { title: 'Tell us what you need', body: 'One form, one conversation. No obligation.' },

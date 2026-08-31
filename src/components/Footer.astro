@@ -23,13 +23,21 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href={url('/about')}>About us</a></li>
           <li><a href={url('/contact')}>Contact</a></li>
+          {/* Leaves the site: the education arm runs its own. Not a `url()` link. */}
+          <li>
+            <a href={site.education.href} target="_blank" rel="noopener">
+              {site.education.name} &#8599;
+            </a>
+          </li>
         </ul>
       </div>
       <div>
         <h4>Reach us</h4>
         <ul>
-          <li><a href={site.contact.phoneHref}>{site.contact.phone}</a></li>
-          <li><a href={site.contact.whatsappHref}>WhatsApp</a></li>
+          {site.contact.phones.map((t) => (
+            <li><a href={t.href}>{t.display}</a></li>
+          ))}
+          <li><a href={site.contact.whatsappHref}>WhatsApp {site.contact.whatsapp}</a></li>
           <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
           <li>{site.contact.address}</li>
           <li>{site.contact.hours}</li>

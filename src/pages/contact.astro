@@ -4,15 +4,15 @@ import EnquiryForm from '../components/EnquiryForm.astro';
 import { url } from '../lib/url';
 import { site } from '../data/site';
 ---
-<Base title="Contact" description={`Get in touch with ${site.name}: one enquiry form for all five business lines.`}>
+<Base title="Contact" description={`Get in touch with ${site.name}: one enquiry form for every business line.`}>
   <section class="hero">
     <div class="wrap">
       <p class="crumbs"><a href={url('/')}>Home</a><span>›</span>Contact</p>
       <p class="eyebrow">Contact</p>
       <h1>Talk to us</h1>
       <p class="hero__lead">
-        One enquiry form for all five business lines. Or call. For most people
-        that is faster.
+        One enquiry form for every business line. Or call. For most people that
+        is faster.
       </p>
     </div>
   </section>
@@ -25,14 +25,16 @@ import { site } from '../data/site';
           <h2>Office</h2>
           <p class="prose">{site.contact.address}</p>
           <ul class="trust__list">
-            <li><a href={site.contact.phoneHref}>{site.contact.phone}</a></li>
+            {site.contact.phones.map((t) => (
+              <li><a href={t.href}>{t.display}</a></li>
+            ))}
             <li><a href={site.contact.whatsappHref}>WhatsApp: {site.contact.whatsapp}</a></li>
             <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
             <li>{site.contact.hours}</li>
           </ul>
           <p class="note">
-            <span class="pending">Placeholder</span> Contact details and map embed
-            pending from the client.
+            <span class="pending">Pending</span> Map embed for the Dr. Mukherjee
+            Nagar office.
           </p>
         </div>
         <EnquiryForm variant="other" heading="Send an enquiry" />

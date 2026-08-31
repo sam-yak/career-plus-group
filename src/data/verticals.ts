@@ -127,7 +127,7 @@ export const verticals: Vertical[] = [
     division: 'realty-finserve',
     order: 2,
     navBlurb: 'Personal · Business · OD',
-    cardBlurb: 'Five loan products arranged through our partner banks and NBFCs.',
+    cardBlurb: 'Personal, business, corporate and project finance arranged through our partner banks and NBFCs.',
     heroHeading: 'The lender whose policy fits your profile',
     heroLead:
       'We are a loan facilitator. We understand your requirement, match it to a partner bank or NBFC whose policy actually fits your profile, and manage the file through to disbursal.',
@@ -150,7 +150,7 @@ export const verticals: Vertical[] = [
       { title: 'Sanction & disbursal', body: 'Lender verification, sanction letter, then funds to your account.' },
     ],
 
-    offeringsTitle: 'The five products we arrange',
+    offeringsTitle: 'The products we arrange',
     offerings: [
       { title: 'Personal loan', body: 'Unsecured, income-based, no collateral. The fastest product to disburse.' },
       { title: 'Business loan', body: 'Working capital and expansion finance for MSMEs, often collateral-free.' },

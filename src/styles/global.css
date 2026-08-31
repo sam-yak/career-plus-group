@@ -264,6 +264,31 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   font-size: 0.92rem; color: #a9b4ca; max-width: 60ch;
 }
 
+/*
+ * The founding business, on the dark hero. Sits under .hero__meta and reads as
+ * a credential rather than a nav item: the group's legacy claim is the society's
+ * education record, so this is the one place a visitor can go and verify it.
+ */
+.origin {
+  display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap;
+  margin-top: 1.4rem; padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18); border-left: 3px solid var(--gold);
+  border-radius: var(--radius); max-width: 60ch;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.origin:hover { border-color: var(--gold-light); background: rgba(255, 255, 255, 0.05); }
+.origin__mark {
+  font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.95rem;
+  color: var(--paper); white-space: nowrap;
+}
+.origin__text { font-size: 0.9rem; color: #a9b4ca; }
+.origin__more { color: var(--gold-light); font-weight: 600; white-space: nowrap; margin-left: 0.4rem; }
+
+@media (max-width: 32rem) {
+  .origin { flex-direction: column; gap: 0.4rem; }
+}
+
 /* ── Cards & grids ───────────────────────────────────────────────────── */
 
 .grid { display: grid; gap: 1.25rem; }
@@ -288,6 +313,14 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 /* Division colour accent on the service cards */
 .card[data-division='realty-finserve'] { border-top: 3px solid var(--gold); }
 .card[data-division='hospitality-services'] { border-top: 3px solid var(--navy); }
+
+/*
+ * A card that leaves the site (the education arm). Dashed top rule rather than
+ * a division colour, because it belongs to no division: the visual difference is
+ * the point, so nobody reads it as a sixth vertical.
+ */
+.card--external { border-top: 3px dashed var(--line); background: var(--sand); }
+.card--external:hover { border-top-color: var(--gold); }
 
 /* ── Trust strip ─────────────────────────────────────────────────────── */
 
