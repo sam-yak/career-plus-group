@@ -12,18 +12,19 @@ DirectoryIndex index.html
 
 ErrorDocument 404 /404.html
 
-# ── Turn this block on AFTER AutoSSL has issued the certificate ──────────
-# Until then it redirects every visitor to an https:// address the browser
-# cannot verify, and the site looks broken. Remove the leading # from the six
-# lines below once https://careerplusgroup.org loads with a padlock.
+# ── Canonical host ───────────────────────────────────────────────────────
+# www.careerplusgroup.org redirects to the bare domain, so a page is never
+# reachable at two addresses and search engines never split its ranking.
 #
-# <IfModule mod_rewrite.c>
-#   RewriteEngine On
-#   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-#   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
-#   RewriteCond %{HTTPS} !=on
-#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
+# REQUEST_SCHEME preserves http or https as it found it, so this is safe to
+# run before a certificate exists. Forcing http to https is NOT done here:
+# cPanel has its own "Force HTTPS Redirect" toggle on the Domains page, and
+# two redirect rules fighting each other is a loop nobody enjoys debugging.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ %{REQUEST_SCHEME}://%1%{REQUEST_URI} [L,R=301]
+</IfModule>
 
 # ── Caching ──────────────────────────────────────────────────────────────
 # Astro fingerprints every asset it emits (_slug_.BpychFDU.css), so a changed
