@@ -43,7 +43,7 @@ export const site = {
 
     whatsapp: '+91 93100 69778',
     whatsappHref: 'https://wa.me/919310069778',
-    /* TODO(client): a group-domain address once careerplusgroup.in has mail. */
+    /* TODO(client): an @careerplusgroup.org address, created in cPanel. */
     email: 'contact@careerplusonline.com',
     address: '301/A-37-38-39, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
     hours: 'Mon–Sat, 10:00 – 19:00',

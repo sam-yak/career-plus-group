@@ -1,5 +1,11 @@
-# Pre-launch. Effective only on the real domain (careerplusgroup.in).
-# On the GitHub Pages project path this file is NOT read by crawlers; the
-# noindex meta tag in src/layouts/Base.astro is what blocks indexing there.
+# PRE-LAUNCH. Blocks the whole site from search engines.
+#
+# TO GO LIVE: delete the Disallow line below, replace it with "Allow: /", and
+# delete the noindex meta tag in src/layouts/Base.astro. Do BOTH: this file
+# governs careerplusgroup.org, the meta tag governs the GitHub Pages staging
+# copy, and each is invisible to the other.
+#
+# Do not do either until the enquiry form is connected to a real inbox. A site
+# that ranks and then drops every enquiry is worse than one nobody can find.
 User-agent: *
 Disallow: /

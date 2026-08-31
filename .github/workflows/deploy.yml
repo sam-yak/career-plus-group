@@ -24,7 +24,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Staging build: the sub-path target. The live site on careerplusgroup.org
+      # is the default target and is deployed from cPanel, not from here.
       - run: npm run build
+        env:
+          DEPLOY_TARGET: pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
