@@ -1,0 +1,17 @@
+# Response headers for Cloudflare Pages.
+#
+# This replaces the .htaccess the site used on Apache. Pages is not Apache and
+# never reads .htaccess, so that file was deleted rather than left to rot.
+#
+# Rules are matched in order and the most specific match wins.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Astro fingerprints every asset it emits (_slug_.BpychFDU.css), so a changed
+# file always arrives under a new name. These can be cached indefinitely; the
+# HTML above never is, so a deploy is visible immediately.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

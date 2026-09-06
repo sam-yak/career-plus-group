@@ -5,9 +5,11 @@ import { defineConfig } from 'astro/config';
  *
  * Two places, one codebase. The only real difference is the sub-path:
  *
- *   production  careerplusgroup.org on cPanel, served from the domain root,
- *               so `base` is '/'. This is the default: an unset or unknown
- *               DEPLOY_TARGET builds the live site, never the staging one.
+ *   production  careerplusgroup.org on Cloudflare Pages, served from the
+ *               domain root, so `base` is '/'. This is the default: an unset
+ *               or unknown DEPLOY_TARGET builds the live site, never staging.
+ *               Cloudflare runs `npm run build` with no DEPLOY_TARGET set, so
+ *               it lands here without any configuration on their side.
  *
  *   pages       sam-yak.github.io/career-plus-group, kept as a staging mirror
  *               so changes can be seen before they reach the real domain. It
