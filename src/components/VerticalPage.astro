@@ -126,9 +126,18 @@ const division = divisions[v.division];
         <p class="eyebrow">Trust</p>
         <h2>{v.trustTitle}</h2>
       </div>
-      <ul class="trust__list">
-        {v.trust.map((t) => <li>{t}</li>)}
-      </ul>
+      <div class="stack">
+        <ul class="trust__list">
+          {v.trust.map((t) => <li>{t}</li>)}
+        </ul>
+        {/* Leaves the site: a partner's own channel. Not a `url()` link. */}
+        {v.partner && (
+          <a class="partner-link" href={v.partner.href} target="_blank" rel="noopener">
+            <strong>{v.partner.name}</strong>
+            <span>{v.partner.note} &#8599;</span>
+          </a>
+        )}
+      </div>
     </div>
   </div>
 </section>

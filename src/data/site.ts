@@ -50,7 +50,7 @@ export const site = {
     whatsappHref: 'https://wa.me/919310069778',
     /* TODO(client): an @careerplusgroup.org address, created in cPanel. */
     email: 'contact@careerplusonline.com',
-    address: '301/A-37-38-39, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
+    address: '301/A-37-38-39, Third Floor, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
     // Both 301 and 302 belong to the society and both appear on the GST
     // certificate. 301 is reception, so it is the one a visitor should be given.
     mapHref: 'https://maps.google.com/?cid=2106582543092123839',
@@ -58,14 +58,14 @@ export const site = {
   },
 
   /**
-   * Society and GST are confirmed from documents. RERA is still outstanding and
-   * carries `pending: true`, so the UI badges that one line rather than
-   * disclaiming all three. Remove the flag when the number arrives.
+   * Only registrations we actually hold. There is no RERA line: the group does
+   * not have a number yet, and an empty "RERA Reg. No. PENDING" on every page
+   * advertises the gap rather than covering it. Add the row when the number
+   * exists. The `pending` flag is still honoured by the UI for any future row.
    */
   registrations: [
     { label: 'Society Reg. No.', value: 'S.34036 of 1998' },
     { label: 'GST No.', value: '07AAATC1792P1ZB' },
-    { label: 'RERA Reg. No.', value: 'PENDING', pending: true },
   ],
 
   founded: FOUNDED,
@@ -83,12 +83,17 @@ export const site = {
     { value: '2', label: 'Divisions' },
   ],
 
-  // TODO(client): replace with real partner names, then logo files.
+  /*
+   * Described by category rather than named. The tie-ups are still being signed,
+   * and naming an institution before the agreement exists is a claim we would
+   * have to withdraw. Named partners are added here as each one is confirmed,
+   * which is why Owdy and TripCon already appear.
+   */
   partners: [
-    { group: 'Banking & NBFC', names: ['Partner bank names pending'] },
-    { group: 'Builders & developers', names: ['Developer names pending'] },
+    { group: 'Banking & NBFC', names: ['Public sector banks, private banks and NBFCs'] },
+    { group: 'Builders & developers', names: ['RERA-registered residential and commercial projects'] },
     { group: 'Alkaline water', names: ['Owdy'] },
-    { group: 'Universities', names: ['University partners pending'] },
+    { group: 'Universities', names: ['Universities and admission partners across our study destinations'] },
     { group: 'Travel', names: ['TripCon Holidays'] },
   ],
 

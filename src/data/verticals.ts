@@ -44,6 +44,12 @@ export interface Vertical {
   trustTitle: string;
   trust: string[];
   faqs: FaqItem[];
+  /**
+   * The fulfilment partner behind this line, when there is a single named one.
+   * Rendered in the trust block. Optional: most verticals run across several
+   * partners and have nothing to point at.
+   */
+  partner?: { name: string; href: string; note: string };
   /** Rendered as a small-print line under the form. Compliance matters here. */
   disclaimer?: string;
 }
@@ -233,27 +239,29 @@ export const verticals: Vertical[] = [
       { title: 'Home machines (B2C)', body: 'Domestic alkaline ionisers, handled as a separate consumer line.' },
     ],
 
+    /*
+     * No specification table. Every figure in the old one was a placeholder, and
+     * a procurement team reads that table before enquiring: eight rows of "to be
+     * confirmed" is worse than no table. Block 5 collapses on an empty array.
+     * Fill this in when Owdy supplies the lab report and certificates.
+     */
     requirementsTitle: 'Product & supply specifications',
-    requirementsNote:
-      'Specifications pending final confirmation from Owdy. Figures shown are placeholders and will be replaced before launch.',
-    requirements: [
-      { category: 'pH level', items: 'pH 9.5+, to be confirmed against lab report' },
-      { category: 'Method', items: 'Ionisation / mineral enrichment, to be confirmed' },
-      { category: 'Bottle sizes', items: 'To be confirmed with Owdy' },
-      { category: 'Minimum order', items: 'Quoted in cases or cartons, never single bottles' },
-      { category: 'Pricing tiers', items: 'Standard / Bulk / Enterprise, by monthly volume' },
-      { category: 'Certifications', items: 'FSSAI, BIS (IS 14543), ISO 22000. Certificates pending from Owdy' },
-      { category: 'Delivery area', items: 'Serviceable cities to be published before orders open' },
-      { category: 'Payment terms', items: 'Invoiced on standard business credit terms' },
-    ],
+    requirements: [],
 
     trustTitle: 'Why procurement teams choose us',
     trust: [
+      'Products we have tested ourselves, supplied to a standard we are willing to put our name on.',
       'Month-to-month supply. It continues because the product and the service earn it.',
       'Volume pricing quoted per case, with tiers published up front.',
       'Private-label bottling available: your brand, our logistics.',
       'A dedicated account manager rather than a general enquiry line.',
     ],
+
+    partner: {
+      name: 'Owdy',
+      href: 'https://www.instagram.com/owdy_alkaline_water',
+      note: 'See the product range on Instagram',
+    },
 
     faqs: [
       { q: 'What is the minimum order quantity?', a: 'Orders are placed in cases rather than individual bottles. The exact minimum depends on your sector and delivery city. We will confirm it with your quote.' },
@@ -264,7 +272,7 @@ export const verticals: Vertical[] = [
     ],
 
     disclaimer:
-      'This is a wholesale supply line for businesses. Product specifications and certifications are being finalised with our supply partner and will be published in full before orders open.',
+      'This is a wholesale supply line for businesses. Specifications, certifications and delivery areas are confirmed in writing with your quote.',
   },
 
   /* ──────────────────────────────────────────────────────────────────── */

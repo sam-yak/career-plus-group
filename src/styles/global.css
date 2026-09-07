@@ -336,6 +336,17 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   margin-top: 0.7rem; font-size: 0.86rem; color: var(--ink-soft);
 }
 
+/* Named fulfilment partner on a vertical page, under the trust list. */
+.partner-link {
+  display: inline-flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+  margin-top: 1.4rem; padding: 0.7rem 1rem; text-decoration: none;
+  border: 1px solid var(--line); border-left: 3px solid var(--gold);
+  border-radius: var(--radius); color: var(--ink-soft); font-size: 0.92rem;
+  transition: border-color 0.18s ease;
+}
+.partner-link:hover { border-color: var(--gold); }
+.partner-link strong { font-family: 'Cinzel', serif; color: var(--navy); }
+
 /* ── Trust strip ─────────────────────────────────────────────────────── */
 
 .trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.5rem; }
