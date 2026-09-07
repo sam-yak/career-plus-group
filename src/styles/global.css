@@ -330,6 +330,41 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   }
 }
 
+/* ── The founding business, on the dark hero ─────────────────────────── */
+/*
+ * Sits under .hero__meta and reads as a credential: the group's legacy claim is
+ * the society's education record, so this is the one place a visitor can go and
+ * check it.
+ *
+ * These colours are load-bearing, not decoration. The global `a` rule paints
+ * links navy with a gold underline, which is right on a white page and
+ * invisible on this navy band. Delete these rules and the link becomes navy on
+ * navy: still clickable, completely unreadable. That is exactly what happened
+ * once already.
+ */
+.origin {
+  display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap;
+  margin-top: 1.4rem; padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18); border-left: 3px solid var(--gold);
+  border-radius: var(--radius); max-width: 60ch;
+  text-decoration: none;
+  color: #a9b4ca;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.origin:hover { border-color: var(--gold-light); background: rgba(255, 255, 255, 0.05); }
+.origin__mark {
+  font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.95rem;
+  color: var(--paper);
+}
+.origin__text { font-size: 0.9rem; color: #a9b4ca; }
+.origin__more { color: var(--gold-light); font-weight: 600; white-space: nowrap; margin-left: 0.4rem; }
+
+@media (max-width: 40rem) {
+  .origin { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
+  .origin__mark { white-space: normal; }
+  .origin__more { margin-left: 0; display: inline-block; margin-top: 0.2rem; }
+}
+
 /* ── Cards & grids ───────────────────────────────────────────────────── */
 
 .grid { display: grid; gap: 1.25rem; }
