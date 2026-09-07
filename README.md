@@ -4,8 +4,9 @@ Iteration 1. A static, lead-generation site covering two divisions and five
 business lines, built so that adding a sixth business line is a content edit
 rather than a development task.
 
-Built with [Astro](https://astro.build). Output is plain static HTML — it will
-run on GitHub Pages, Cloudflare Pages, Netlify, or any shared host.
+Built with [Astro](https://astro.build). Output is plain static HTML. It is
+deployed on Cloudflare Pages at [careerplusgroup.org](https://careerplusgroup.org)
+and will run on any static host.
 
 ---
 
@@ -13,7 +14,7 @@ run on GitHub Pages, Cloudflare Pages, Netlify, or any shared host.
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/career-plus-group
+npm run dev      # http://localhost:4321
 ```
 
 Other commands:
@@ -23,50 +24,35 @@ npm run build    # static output into dist/
 npm run preview  # serve the built output exactly as it will deploy
 ```
 
-> Note the `/career-plus-group` in the dev URL. That is the GitHub Pages
-> sub-path, set as `base` in `astro.config.mjs`. When you move to the real
-> domain, set `base: '/'` and it disappears.
-
 ---
 
-## Before your first push — two edits
+## Deploying
 
-**1. `astro.config.mjs`** — replace `USERNAME` with your GitHub username:
+Push to `main`. Cloudflare Pages is connected to this repository, runs
+`npm run build`, and publishes `dist/`. There is no deploy workflow in the repo
+and nothing to upload by hand.
 
-```js
-site: 'https://YOUR-USERNAME.github.io',
-base: '/career-plus-group',
-```
+Build settings on the Cloudflare side, for reference:
 
-If you name the repository something other than `career-plus-group`, `base`
-must match the repository name exactly.
+| Setting | Value |
+|---|---|
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Production branch | `main` |
+| Environment variables | none |
 
-**2. `src/data/site.ts`** — phone, WhatsApp, email and address are placeholders.
-The WhatsApp link needs the number in international format with no symbols:
-`https://wa.me/919876543210`.
+Node is pinned to 22 by `.nvmrc`, because Cloudflare's default differs between
+their build images.
 
----
+`public/_headers` carries the caching and security headers. The www to apex
+redirect is a Cloudflare dashboard rule rather than a `_redirects` entry, since
+that file format cannot match on hostname.
 
-## Deploying to GitHub Pages
+### The site is not indexed yet
 
-```bash
-cd career-plus-group
-git init
-git add .
-git commit -m "Career Plus Group website, iteration 1"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/career-plus-group.git
-git push -u origin main
-```
-
-Then, once only: on GitHub go to **Settings → Pages → Build and deployment**
-and set **Source** to **GitHub Actions**.
-
-Every push to `main` now rebuilds and redeploys automatically. The site lands at
-`https://YOUR-USERNAME.github.io/career-plus-group`.
-
-If the first deploy 404s, it is almost always a `base` mismatch — the value in
-`astro.config.mjs` must equal the repository name.
+`public/robots.txt` disallows everything and `src/layouts/Base.astro` sends a
+`noindex` tag. They do different jobs, so both come off together, and not before
+the enquiry form reaches a real inbox.
 
 ---
 
@@ -123,10 +109,11 @@ receive a POST. On submit it logs the payload to the browser console and shows a
 confirmation. That is fine for showing the site internally; it is not fine for
 launch.
 
-Two options, both about ten minutes of work:
+Note that **Cloudflare Pages has no built-in form handling**. Netlify does;
+Cloudflare does not, so hosting here means picking one of these:
 
-**Formspree** (works on GitHub Pages). Create a form, then in
-`EnquiryForm.astro` replace the block marked `DEMO MODE` with:
+**A form service.** Formspree, Web3Forms and similar. Replace the block marked
+`DEMO MODE` in `EnquiryForm.astro` with:
 
 ```js
 await fetch('https://formspree.io/f/YOUR_ID', {
@@ -136,27 +123,26 @@ await fetch('https://formspree.io/f/YOUR_ID', {
 });
 ```
 
-**Netlify** or **Cloudflare Pages** — both have built-in form handling and free
-custom-domain SSL, and neither needs a third-party service. If the site is
-moving to the real domain anyway, this is the better path.
+Fastest path, and the free tiers cap monthly submissions.
 
-Routing by service type (sending each enquiry to the right internal team) is
-configured in whichever service you pick, keyed on the `service` field the form
-already sends.
+**A Pages Function.** Add `functions/api/enquiry.ts` to this repo and POST to
+`/api/enquiry`. Cloudflare deploys it alongside the site with no extra service
+to sign up for, but it still needs an email provider (Resend, Postmark) to
+actually deliver the message, since a Worker cannot send mail by itself.
+
+Either way, routing each enquiry to the right internal team keys on the
+`service` field the form already sends. That needs a destination per business
+line from the client before it can be built.
 
 ---
 
-## Moving to the real domain
+## The domain
 
-1. Set `site: 'https://careerplusgroup.in'` and `base: '/'` in
-   `astro.config.mjs`.
-2. Add a `public/CNAME` file containing just the domain name.
-3. Point the domain's DNS at the host, and enable HTTPS.
+`careerplusgroup.org`, registered through ResellerClub, with DNS on Cloudflare
+and the site on Cloudflare Pages. HTTPS is issued automatically.
 
-GitHub Pages supports custom domains with free certificates, so you can stay put.
-Cloudflare Pages or Netlify are worth considering instead once forms need a
-backend — same push-to-deploy workflow, plus form handling and preview builds
-for every branch.
+The www to apex redirect is a Cloudflare Redirect Rule, not a `_redirects`
+entry: that file format cannot match on hostname.
 
 ---
 

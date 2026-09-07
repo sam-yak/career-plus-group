@@ -2,7 +2,7 @@
 
 Static, lead-generation website for Career Plus Group: an Indian advisory group
 operating under Career Plus Educational Society, with two divisions and five
-business lines. Built with Astro, deployed to GitHub Pages.
+business lines. Built with Astro, deployed to Cloudflare Pages.
 
 Working solo: the owner's son, in-house developer, learning the business as he
 builds. Prefer explaining a trade-off over silently picking one.
@@ -29,9 +29,11 @@ seven pages: two division hubs and five vertical landing pages.
   `<option>` and one fieldset — never a second form component.
 - **The extensibility test:** before merging any change, ask *"if we add a sixth
   vertical tomorrow, does this need a developer?"* If yes, restructure it.
-- **Internal links must go through `url()`** from `src/lib/url.ts`. A bare
-  `href="/loans"` breaks on GitHub Pages, which serves from a `/career-plus-group`
-  sub-path. This is the single most common way to break the deployed site.
+- **Internal links must go through `url()`** from `src/lib/url.ts`. The site is
+  at the domain root today, so a bare `href="/loans"` happens to work, which is
+  exactly what makes it dangerous: it will pass review and then break the day the
+  site moves into a sub-path. `url()` is the single place link construction
+  happens, and it stays that way.
 
 If a request would violate one of these, say so and propose the alternative
 rather than complying quietly.
@@ -179,7 +181,7 @@ than a plausible fabrication that reaches a live site.
 ## Commands
 
 ```bash
-npm run dev      # localhost:4321/career-plus-group
+npm run dev      # localhost:4321
 npm run build    # static output to dist/
 npm run preview  # serve the build exactly as it deploys
 ```
@@ -191,9 +193,17 @@ errors surface at build time, not in dev.
 
 ## Deployment
 
-Push to `main` → GitHub Action → GitHub Pages. `base` in `astro.config.mjs` must
-equal the repository name. On the real domain, set `base: '/'` and add
-`public/CNAME`.
+Push to `main` → Cloudflare Pages builds and deploys. There is no deploy step
+in this repo: Cloudflare runs `npm run build` and publishes `dist/`.
+
+The domain is `careerplusgroup.org`, registered through ResellerClub with DNS on
+Cloudflare. `public/_headers` carries the caching and security headers; the www
+to apex redirect is a Cloudflare dashboard rule, because the `_redirects` file
+format does not match on hostname.
+
+The site is not indexed yet. `public/robots.txt` disallows everything and
+`Base.astro` sends `noindex`. Both come off together, and not before the enquiry
+form reaches a real inbox.
 
 The enquiry form has **no backend yet**. It validates, then logs to console and
 shows a confirmation — see the block marked `DEMO MODE` in `EnquiryForm.astro`.

@@ -1,9 +1,9 @@
 # PRE-LAUNCH. Blocks the whole site from search engines.
 #
 # TO GO LIVE: delete the Disallow line below, replace it with "Allow: /", and
-# delete the noindex meta tag in src/layouts/Base.astro. Do BOTH: this file
-# governs careerplusgroup.org, the meta tag governs the GitHub Pages staging
-# copy, and each is invisible to the other.
+# delete the noindex meta tag in src/layouts/Base.astro. Do BOTH, in the same
+# commit: this file tells a crawler not to visit, the meta tag tells it not to
+# index what it already has. Leaving either one behind keeps the site hidden.
 #
 # Do not do either until the enquiry form is connected to a real inbox. A site
 # that ranks and then drops every enquiry is worse than one nobody can find.

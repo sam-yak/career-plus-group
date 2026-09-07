@@ -16,11 +16,14 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
 
     {/*
-      PRE-LAUNCH ONLY. The demo carries placeholder contact details and PENDING
-      registration numbers, so it must not be indexed under the Career Plus name.
-      A robots.txt does not help here: on a GitHub project page crawlers only read
-      sam-yak.github.io/robots.txt, which we do not control. This tag does the work.
-      DELETE THIS BLOCK when the real content and the real domain go live.
+      PRE-LAUNCH ONLY. The site still carries PENDING registration numbers and
+      placeholder partner names, and the enquiry form does not reach an inbox
+      yet, so it must not be indexed under the Career Plus name.
+
+      This works with public/robots.txt, and neither replaces the other:
+      robots.txt asks a crawler not to fetch the page, this tag tells one that
+      already has it not to index it. DELETE BOTH, in the same commit, when the
+      content is real and the form is wired up.
     */}
     <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

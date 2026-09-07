@@ -1,37 +1,16 @@
 import { defineConfig } from 'astro/config';
 
 /*
- * ── Deployment targets ──────────────────────────────────────────────────
+ * The site is served from the root of careerplusgroup.org on Cloudflare Pages,
+ * so `base` is '/'. Cloudflare runs `npm run build` and publishes `dist/`; there
+ * is no deploy step in this repo and no second target to keep in sync.
  *
- * Two places, one codebase. The only real difference is the sub-path:
- *
- *   production  careerplusgroup.org on Cloudflare Pages, served from the
- *               domain root, so `base` is '/'. This is the default: an unset
- *               or unknown DEPLOY_TARGET builds the live site, never staging.
- *               Cloudflare runs `npm run build` with no DEPLOY_TARGET set, so
- *               it lands here without any configuration on their side.
- *
- *   pages       sam-yak.github.io/career-plus-group, kept as a staging mirror
- *               so changes can be seen before they reach the real domain. It
- *               is served from a sub-folder, so `base` carries the repo name.
- *
- * Every internal link goes through `url()` in src/lib/url.ts, which reads
- * BASE_URL from here. That is what makes one build work in both places, and
- * it is why a bare href="/loans" is a bug: it would break on Pages.
- *
- *   npm run build                     → production
- *   DEPLOY_TARGET=pages npm run build → staging (the GitHub Action does this)
- * ────────────────────────────────────────────────────────────────────────
+ * `base` still matters. Every internal link goes through `url()` in
+ * src/lib/url.ts, which reads BASE_URL from here, so moving the site into a
+ * sub-path later is a one-line change rather than a find-and-replace.
  */
-const targets = {
-  production: { site: 'https://careerplusgroup.org', base: '/' },
-  pages: { site: 'https://sam-yak.github.io', base: '/career-plus-group' },
-};
-
-const target = targets[process.env.DEPLOY_TARGET] ?? targets.production;
-
 export default defineConfig({
-  site: target.site,
-  base: target.base,
+  site: 'https://careerplusgroup.org',
+  base: '/',
   trailingSlash: 'ignore',
 });
