@@ -48,7 +48,7 @@ const year = new Date().getFullYear();
     <div class="footer__bar">
       <span>
         {site.name} operates under {site.parent}
-        {site.registrations.map((r) => ` · ${r.label} ${r.value}`)}
+        {site.registrations.filter((r) => !r.pending).map((r) => ` · ${r.label} ${r.value}`)}
       </span>
       <span>© {year} {site.name}</span>
     </div>

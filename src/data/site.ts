@@ -1,13 +1,18 @@
 /**
- * Years the PARENT SOCIETY has been operating. Single source of truth: copy
- * references `site.legacy` (or `site.yearsActive`), never a literal "30".
+ * The society was founded in 1996 and registered with the Registrar of
+ * Societies, Delhi on 9 December 1998. Confirmed against careerplusonline.com
+ * and the society's own logo, which reads "A Legacy of Three Decade".
+ *
+ * Derived, not hardcoded, so the claim stays true without anyone remembering to
+ * edit it. Copy references `site.legacy` or `site.yearsActive`, never a literal.
  *
  * SCOPE: homepage only. The group's business lines are new, so this number must
  * never appear on a vertical page or in `verticals.ts` — next to a vertical it
  * reads as "30 years of doing this", which is not true of any of them. It is
- * the society's advisory record, and it is framed that way wherever it appears.
+ * the society's record, and it is framed that way wherever it appears.
  */
-const yearsActive = 30;
+const FOUNDED = 1996;
+const yearsActive = new Date().getFullYear() - FOUNDED;
 
 export const site = {
   name: 'Career Plus Group',
@@ -46,14 +51,25 @@ export const site = {
     /* TODO(client): an @careerplusgroup.org address, created in cPanel. */
     email: 'contact@careerplusonline.com',
     address: '301/A-37-38-39, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
+    // TODO(client): the GST certificate lists this unit as 302, not 301. Confirm
+    // which is correct before launch; a wrong unit number sends visitors to the
+    // wrong floor of a large building.
+    mapHref: 'https://maps.google.com/?cid=2106582543092123839',
     hours: 'Mon–Sat, 10:00 – 19:00',
   },
 
+  /**
+   * Society and GST are confirmed from documents. RERA is still outstanding and
+   * carries `pending: true`, so the UI badges that one line rather than
+   * disclaiming all three. Remove the flag when the number arrives.
+   */
   registrations: [
-    { label: 'Society Reg. No.', value: 'PENDING' },
-    { label: 'RERA Reg. No.', value: 'PENDING' },
-    { label: 'GST No.', value: 'PENDING' },
+    { label: 'Society Reg. No.', value: 'S.34036 of 1998' },
+    { label: 'GST No.', value: '07AAATC1792P1ZB' },
+    { label: 'RERA Reg. No.', value: 'PENDING', pending: true },
   ],
+
+  founded: FOUNDED,
 
   // Homepage trust strip. Years active is confirmed; divisions are a structural
   // fact. TODO(client): clients served.

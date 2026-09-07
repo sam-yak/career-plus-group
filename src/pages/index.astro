@@ -90,10 +90,16 @@ import { verticals, notation } from '../data/verticals';
           </div>
         ))}
       </div>
+      {/* Society and GST are real numbers now, so the badge marks only the one
+          line still waiting rather than disclaiming the whole strip. */}
       <p class="note" style="margin-top:2rem">
         Registered under {site.parent}
-        {site.registrations.map((r) => ` · ${r.label} ${r.value}`)}
-        <span class="pending" style="margin-left:0.5rem">Awaiting client data</span>
+        {site.registrations.map((r) => (
+          <span>
+            {` · ${r.label} ${r.value}`}
+            {r.pending && <span class="pending" style="margin-left:0.4rem">Awaiting</span>}
+          </span>
+        ))}
       </p>
     </div>
   </section>
