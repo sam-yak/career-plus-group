@@ -111,7 +111,7 @@ export const verticals: Vertical[] = [
 
     trustTitle: 'Why buyers work with us',
     trust: [
-      'A registered channel partner with direct developer tie-ups, so you see inventory straight from the source.',
+      'Direct developer tie-ups, so you see inventory straight from the source.',
       'Every project we place carries a verifiable RERA registration number.',
       'Every document verified while there is still time to walk away.',
       'Home loan and loan-against-property handled in-house through Fin-Serve.',

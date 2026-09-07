@@ -144,20 +144,21 @@ export const site = {
   },
 
   /**
-   * TODO(client): confirm Neeraj Kushwaha's exact title. careerplusonline.com
-   * carries his name on the director's message alongside the president's but
-   * does not state a designation, and inventing one is not worth the risk.
-   * Note also that site spells the first name "Niraj"; the spelling below is
-   * the one the family uses.
+   * Designations confirmed by the client. Note the spellings: careerplusonline
+   * .com writes "Niraj", the family writes "Neeraj", and the GST certificate and
+   * the proprietorship declaration both write "Agarwal" rather than "Aggarwal".
+   * The legal documents win for the surname.
    */
   leadership: {
     photo: '/logos/leadership.jpg',
-    caption: 'Neeraj Kushwaha (left) and Anuj Kumar Agarwal (right)',
-    president: {
-      name: 'Anuj Kumar Agarwal',
-      title: 'President, Career Plus Educational Society',
-      since: 1998,
-    },
+    /* Alt text names them left to right, matching how they stand in the frame. */
+    photoAlt: 'Neeraj Kushwaha, left, and Anuj Kumar Agarwal, right',
+    people: [
+      { name: 'Anuj Kumar Agarwal', title: 'Chairman and Managing Director' },
+      { name: 'Neeraj Kushwaha', title: 'Secretary and Managing Director' },
+    ],
+    /** Anuj has led the society since 1998. Sourced from careerplusonline.com. */
+    presidentSince: 1998,
   },
 
   howItWorks: [

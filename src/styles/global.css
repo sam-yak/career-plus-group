@@ -335,6 +335,11 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 .portrait figcaption {
   margin-top: 0.7rem; font-size: 0.86rem; color: var(--ink-soft);
 }
+/* Names and designations under the portrait. */
+.people { list-style: none; margin: 1.4rem 0 0; padding: 0; display: grid; gap: 0.8rem; }
+.people li { display: grid; gap: 0.1rem; border-left: 2px solid var(--gold); padding-left: 0.9rem; }
+.people strong { font-family: 'Cinzel', serif; color: var(--navy); font-size: 1rem; }
+.people span { font-size: 0.88rem; color: var(--ink-soft); }
 
 /* Named fulfilment partner on a vertical page, under the trust list. */
 .partner-link {

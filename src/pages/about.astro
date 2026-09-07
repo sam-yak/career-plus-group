@@ -87,20 +87,28 @@ import { verticalsIn, notation } from '../data/verticals';
           <figure class="portrait">
             <img
               src={url(site.leadership.photo)}
-              alt={site.leadership.caption}
+              alt={site.leadership.photoAlt}
               width="500"
               height="518"
               loading="lazy"
             />
-            <figcaption>{site.leadership.caption}</figcaption>
+            <figcaption>{site.leadership.photoAlt}</figcaption>
           </figure>
+          <ul class="people">
+            {site.leadership.people.map((person) => (
+              <li>
+                <strong>{person.name}</strong>
+                <span>{person.title}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         <div class="prose stack">
           <p>
-            {site.leadership.president.name} has led {site.parent} as its
-            president since {site.leadership.president.since}. He is an educationist
-            and journalist, edits Dialogue India, and serves as national president
-            of the Maulik Bharat trust.
+            {site.leadership.people[0].name} has led {site.parent} since
+            {' '}{site.leadership.presidentSince}. He is an educationist and
+            journalist, edits Dialogue India, and serves as national president of
+            the Maulik Bharat trust.
           </p>
           <p>
             His work has been recognised with the
