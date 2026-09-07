@@ -54,7 +54,7 @@ export const site = {
     // Both 301 and 302 belong to the society and both appear on the GST
     // certificate. 301 is reception, so it is the one a visitor should be given.
     mapHref: 'https://maps.google.com/?cid=2106582543092123839',
-    hours: 'Mon–Sat, 10:00 – 19:00',
+    hours: 'Mon–Sat, 9:00 am to 6:00 pm',
   },
 
   /**
@@ -144,17 +144,21 @@ export const site = {
   },
 
   /**
-   * Designations confirmed by the client. Note the spellings: careerplusonline
-   * .com writes "Niraj", the family writes "Neeraj", and the GST certificate and
-   * the proprietorship declaration both write "Agarwal" rather than "Aggarwal".
-   * The legal documents win for the surname.
+   * Names and designations confirmed by the client.
+   *
+   * "Neeraj" is settled: careerplusonline.com writes "Niraj" and is wrong.
+   *
+   * The surname is the client's own instruction. Worth knowing that the
+   * proprietorship declaration and careerplusonline.com both write "Agarwal",
+   * so if anyone later compares the site against those documents, this is a
+   * deliberate difference and not a typo to be corrected.
    */
   leadership: {
     photo: '/logos/leadership.jpg',
     /* Alt text names them left to right, matching how they stand in the frame. */
-    photoAlt: 'Neeraj Kushwaha, left, and Anuj Kumar Agarwal, right',
+    photoAlt: 'Neeraj Kushwaha, left, and Anuj Kumar Agrawal, right',
     people: [
-      { name: 'Anuj Kumar Agarwal', title: 'Chairman and Managing Director' },
+      { name: 'Anuj Kumar Agrawal', title: 'Chairman and Managing Director' },
       { name: 'Neeraj Kushwaha', title: 'Secretary and Managing Director' },
     ],
     /** Anuj has led the society since 1998. Sourced from careerplusonline.com. */
