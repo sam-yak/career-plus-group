@@ -268,6 +268,28 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 }
 
 /*
+ * Hero photograph. Mobile-first: one column, and the image sits BELOW the
+ * headline and the buttons, so the fold stays text and call to action on the
+ * phones that are most of this traffic. It only becomes a second column once
+ * there is width to spare.
+ */
+.hero__grid { display: grid; gap: 2.5rem; align-items: center; }
+.hero__media { margin: 0; }
+.hero__media img {
+  display: block; width: 100%; height: auto; border-radius: var(--radius);
+  /* Warms the photograph toward the navy so it reads as part of the band
+     rather than a rectangle pasted onto it. */
+  filter: saturate(0.85) contrast(1.02);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+@media (min-width: 60rem) {
+  .hero__grid { grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; }
+  .hero h1 { max-width: 14ch; }
+  .hero__lead { font-size: var(--step-1); }
+}
+
+/*
  * The founding business, on the dark hero. Sits under .hero__meta and reads as
  * a credential rather than a nav item: the group's legacy claim is the society's
  * education record, so this is the one place a visitor can go and verify it.

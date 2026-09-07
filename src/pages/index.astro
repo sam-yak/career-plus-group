@@ -8,13 +8,39 @@ import { verticals, notation } from '../data/verticals';
 
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">{site.legacy} under {site.parent}</p>
-      <h1>One group. Many ways forward.</h1>
-      <p class="hero__lead">{site.positioning}</p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#enquire">Talk to us</a>
-        <a class="btn btn--ghost" href="#services">See what we do</a>
+      <div class="hero__grid">
+        <div>
+          <p class="eyebrow">{site.legacy} under {site.parent}</p>
+          <h1>One group. Many ways forward.</h1>
+          <p class="hero__lead">{site.positioning}</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#enquire">Talk to us</a>
+            <a class="btn btn--ghost" href="#services">See what we do</a>
+          </div>
+        </div>
+
+        {/*
+          Stock photograph, Unsplash License, by Ngital.
+          https://unsplash.com/photos/RdEFWm0N84o
+
+          The alt text describes a meeting and does NOT call these people the
+          Career Plus team, because they are not. Replace this with a real
+          photograph of the Mukherjee Nagar office as soon as one exists: on a
+          site whose whole argument is a thirty year record, a real room beats
+          a bought one.
+        */}
+        <figure class="hero__media">
+          <img
+            src={url('/images/hero-team.jpg')}
+            alt="A team meeting around a boardroom table"
+            width="1600"
+            height="1067"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
       </div>
+
       <p class="hero__meta">
         Career Plus works as an advisory intermediary. Our partner banks, builders,
         universities and operators do the delivering; the group brings the judgement
