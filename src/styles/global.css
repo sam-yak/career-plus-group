@@ -325,6 +325,17 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 .card--external { border-top: 3px dashed var(--line); background: var(--sand); }
 .card--external:hover { border-top-color: var(--gold); }
 
+/* Leadership portrait on /about. Fixed aspect so the caption never shifts
+   while the image loads. */
+.portrait { margin: 0; max-width: 22rem; }
+.portrait img {
+  display: block; width: 100%; height: auto; border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+.portrait figcaption {
+  margin-top: 0.7rem; font-size: 0.86rem; color: var(--ink-soft);
+}
+
 /* ── Trust strip ─────────────────────────────────────────────────────── */
 
 .trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.5rem; }

@@ -27,20 +27,26 @@ import { verticalsIn, notation } from '../data/verticals';
         </div>
         <div class="prose stack">
           <p>
-            Career Plus grew outward from {site.parent} as families kept coming
-            back with adjacent problems. Someone buying a flat needed
-            a home loan. A student going abroad needed an education loan and, once
-            there, somewhere to live. A hotel client needed supply.
+            Career Plus began in {site.founded} as a coaching institute in Delhi,
+            and was registered as {site.parent} with the {site.story.registrar} in
+            {site.story.registered}. The purpose then is the purpose now: put
+            serious civil services preparation within reach of students who cannot
+            buy their way to it.
           </p>
           <p>
-            Rather than send people elsewhere, the group added the capability,
-            and organised it so each line has real specialists rather than
-            generalists covering everything badly.
+            The society was the first in India to teach IAS and PCS subjects the
+            industry had passed over, among them mathematics, chemistry,
+            agriculture, botany, zoology, statistics, economics, commerce and
+            several literatures, and the first to open coaching for the Indian
+            Engineering Services and the Indian Forest Services.
           </p>
           <p>
-            <span class="pending">Placeholder</span> Founding year, leadership
-            profiles and the group's history are pending from the client and will
-            replace this section before launch.
+            The group came later, and for a specific reason. Career Plus is a
+            service organisation, and the social work it does is paid for by what
+            the group earns. Realty &amp; Fin-Serve and Hospitality &amp; Services
+            widen that base, and they are held to the same standard as the
+            classroom: transparent terms, ethical dealing, and advice that still
+            holds up when the customer goes and checks it.
           </p>
         </div>
       </div>
@@ -73,6 +79,47 @@ import { verticalsIn, notation } from '../data/verticals';
   </section>
 
   <section class="section">
+    <div class="wrap">
+      <div class="grid grid--2" style="gap:3rem;align-items:start">
+        <div class="stack">
+          <p class="eyebrow">Leadership</p>
+          <h2>Who runs it</h2>
+          <figure class="portrait">
+            <img
+              src={url(site.leadership.photo)}
+              alt={site.leadership.caption}
+              width="500"
+              height="518"
+              loading="lazy"
+            />
+            <figcaption>{site.leadership.caption}</figcaption>
+          </figure>
+        </div>
+        <div class="prose stack">
+          <p>
+            {site.leadership.president.name} has led {site.parent} as its
+            president since {site.leadership.president.since}. He is an educationist
+            and journalist, edits Dialogue India, and serves as national president
+            of the Maulik Bharat trust.
+          </p>
+          <p>
+            His work has been recognised with the
+            {site.story.awards.map((a, i) => (
+              <span>{i > 0 ? ' and the ' : ' '}<strong>{a.name}</strong> in {a.year}</span>
+            ))}, the first awarded by the International Confederation of NGOs.
+          </p>
+          <p>
+            The same people who built the classroom operation run the group. That
+            is the point of the structure: a family that has answered to students
+            and their parents for three decades now answers to buyers, borrowers
+            and hotel procurement teams on the same terms.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
     <div class="wrap">
       <div class="grid grid--2" style="gap:3rem;align-items:start">
         <div>

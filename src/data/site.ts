@@ -51,9 +51,8 @@ export const site = {
     /* TODO(client): an @careerplusgroup.org address, created in cPanel. */
     email: 'contact@careerplusonline.com',
     address: '301/A-37-38-39, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
-    // TODO(client): the GST certificate lists this unit as 302, not 301. Confirm
-    // which is correct before launch; a wrong unit number sends visitors to the
-    // wrong floor of a large building.
+    // Both 301 and 302 belong to the society and both appear on the GST
+    // certificate. 301 is reception, so it is the one a visitor should be given.
     mapHref: 'https://maps.google.com/?cid=2106582543092123839',
     hours: 'Mon–Sat, 10:00 – 19:00',
   },
@@ -118,6 +117,42 @@ export const site = {
       'Classroom and online coaching for UPSC, SSC, banking, CLAT, NEET and IIT-JEE, run from Delhi under the same society.',
     // Homepage hero: ties the legacy to something the visitor can go and look at.
     origin: 'The business the group grew out of, still running and still enrolling.',
+  },
+
+  /**
+   * The society's own history, used on /about only.
+   *
+   * Deliberately NOT `site.legacy`: that is the "30+ years" credibility badge
+   * and stays on the homepage, tied to the parent. What follows is a founding
+   * date inside a history section, which reads as the society's record rather
+   * than as a claim about how long the group has been broking property.
+   */
+  story: {
+    registered: 'December 1998',
+    registrar: 'Registrar of Societies, Delhi',
+    // Awards belong to the society and its president, and are named with the
+    // year and the awarding body so a reader can check them.
+    awards: [
+      { name: 'Karmaveer Chakra', year: 2012, by: 'International Confederation of NGOs' },
+      { name: 'JP Award', year: 2019, by: 'for social service' },
+    ],
+  },
+
+  /**
+   * TODO(client): confirm Neeraj Kushwaha's exact title. careerplusonline.com
+   * carries his name on the director's message alongside the president's but
+   * does not state a designation, and inventing one is not worth the risk.
+   * Note also that site spells the first name "Niraj"; the spelling below is
+   * the one the family uses.
+   */
+  leadership: {
+    photo: '/logos/leadership.jpg',
+    caption: 'Neeraj Kushwaha (left) and Anuj Kumar Agarwal (right)',
+    president: {
+      name: 'Anuj Kumar Agarwal',
+      title: 'President, Career Plus Educational Society',
+      since: 1998,
+    },
   },
 
   howItWorks: [
