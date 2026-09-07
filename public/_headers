@@ -1,9 +1,14 @@
 # Response headers for Cloudflare Pages.
 #
-# This replaces the .htaccess the site used on Apache. Pages is not Apache and
-# never reads .htaccess, so that file was deleted rather than left to rot.
+# These rules are CUMULATIVE, not cascading. When two blocks match the same
+# request, Cloudflare joins the values with a comma instead of letting the more
+# specific block win. Setting Cache-Control in both /* and /_astro/* produced:
 #
-# Rules are matched in order and the most specific match wins.
+#   public, max-age=0, must-revalidate, public, max-age=31536000, immutable
+#
+# and a cache that reads the first max-age it finds treats a fingerprinted asset
+# as uncacheable, which is the exact opposite of the intent. So the asset block
+# unsets the inherited value with "!" before setting its own.
 
 /*
   X-Content-Type-Options: nosniff
@@ -11,7 +16,8 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 # Astro fingerprints every asset it emits (_slug_.BpychFDU.css), so a changed
-# file always arrives under a new name. These can be cached indefinitely; the
-# HTML above never is, so a deploy is visible immediately.
+# file always arrives under a new name and can be cached indefinitely. The HTML
+# above is never cached, so a deploy is visible immediately.
 /_astro/*
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
