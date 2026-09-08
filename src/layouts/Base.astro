@@ -5,15 +5,30 @@ import Footer from '../components/Footer.astro';
 import { url } from '../lib/url';
 import { site } from '../data/site';
 
-interface Props { title: string; description: string; }
+interface Props { title?: string; description: string; }
 const { title, description } = Astro.props;
+
+/*
+ * Build the tab title as ONE string in the frontmatter.
+ *
+ * Writing the two parts inline in the title element looked correct and was
+ * not: Astro kept
+ * the first expression and silently dropped the literal text and the second
+ * one, so every page in the site shipped a title with no brand name in it. It
+ * is not a visible failure, which is why it survived this long. Composing the
+ * string here and passing a single expression is the reliable pattern.
+ *
+ * The homepage passes no title and gets the brand alone, so the tab never reads
+ * as a stray fragment.
+ */
+const pageTitle = title ? `${title} · ${site.name}` : site.name;
 ---
 <!doctype html>
 <html lang="en-IN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}: {site.name}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
     {/*

@@ -168,20 +168,23 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   backdrop-filter: blur(8px);
 }
 .header__inner { display: flex; align-items: center; gap: 2rem; min-height: 74px; }
-/*
- * Brand lockup. The guidance sets a 220px minimum width for the full lockup,
- * below which the deliberate breaks in the ring and the vertical stroke close
- * up visually. A phone header cannot give 220px to a logo and still fit a menu
- * button, so the square mark stands in below 46rem. Both are in the markup and
- * CSS chooses; neither is ever scaled past what it can carry.
- */
-.brand { display: flex; align-items: center; text-decoration: none; }
-.brand__lockup { display: none; width: 232px; height: auto; }
-.brand__mark { display: block; width: 40px; height: 40px; }
+/* Brand: the mark beside the wordmark. The mark carries the identity, the type
+   carries the name, so neither has to work at a size it cannot hold. */
+.brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+.brand__mark { width: 38px; height: 38px; flex: none; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.1; }
+.brand__name {
+  font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.24rem;
+  color: var(--navy); letter-spacing: 0.04em;
+}
+.brand__sub {
+  font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600; margin-top: 2px;
+}
 
-@media (min-width: 46rem) {
-  .brand__lockup { display: block; }
-  .brand__mark { display: none; }
+@media (max-width: 26rem) {
+  .brand__mark { width: 32px; height: 32px; }
+  .brand__name { font-size: 1.08rem; }
 }
 
 .nav { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
