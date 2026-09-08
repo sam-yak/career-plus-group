@@ -23,13 +23,38 @@ interface Env {
   ENQUIRY_FROM?: string;
 }
 
-/** Fields the form may send. Anything else is ignored rather than forwarded. */
-const FIELDS = [
-  'name', 'phone', 'email', 'city', 'service', 'serviceLabel', 'message',
-  'budget', 'propertyType', 'loanAmount', 'loanType', 'employment',
-  'volume', 'sector', 'intake', 'destination', 'course', 'dates', 'travellers',
-  'sourcePage',
-] as const;
+/**
+ * Fields the form may send, in reading order, with the label a person sees.
+ *
+ * Anything not listed is ignored rather than forwarded. The order is the order
+ * they appear in the email: who they are, how to reach them, what they want,
+ * then the detail specific to that business line, then their message.
+ *
+ * `service` is deliberately absent. It carries the internal slug, "real-estate",
+ * while `serviceLabel` carries "Real Estate". Printing both put a developer's
+ * identifier in front of whoever reads these every day.
+ */
+const FIELDS: ReadonlyArray<readonly [string, string]> = [
+  ['name', 'Name'],
+  ['phone', 'Phone'],
+  ['email', 'Email'],
+  ['city', 'City'],
+  ['serviceLabel', 'Business line'],
+  ['propertyType', 'Property type'],
+  ['budget', 'Budget'],
+  ['loanType', 'Loan type'],
+  ['loanAmount', 'Loan amount'],
+  ['employment', 'Employment'],
+  ['sector', 'Sector'],
+  ['volume', 'Monthly volume'],
+  ['destination', 'Destination'],
+  ['course', 'Course'],
+  ['intake', 'Intake'],
+  ['dates', 'Dates'],
+  ['travellers', 'Travellers'],
+  ['message', 'Message'],
+  ['sourcePage', 'Enquired from'],
+];
 
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -89,9 +114,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const rows = FIELDS
-    .filter((f) => body[f]?.trim())
-    .map((f) => `<tr><td style="padding:4px 12px 4px 0;color:#5f5e58">${f}</td>` +
-                `<td style="padding:4px 0"><strong>${esc(body[f].trim())}</strong></td></tr>`)
+    .filter(([key]) => body[key]?.trim())
+    .map(([key, label]) =>
+      `<tr><td style="padding:5px 16px 5px 0;color:#5f5e58;vertical-align:top;white-space:nowrap">${label}</td>` +
+      `<td style="padding:5px 0"><strong>${esc(body[key].trim())}</strong></td></tr>`)
     .join('');
 
   const line = body.serviceLabel || body.service || 'General';
