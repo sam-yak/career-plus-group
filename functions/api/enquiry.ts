@@ -102,7 +102,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     `from careerplusgroup.org</p>`;
 
   try {
-    await deliver(env, `Enquiry: ${line} — ${body.name.trim()}`, html, body.email?.trim() || undefined);
+    await deliver(env, `Website enquiry: ${line}, ${body.name.trim()}`, html, body.email?.trim() || undefined);
     return json({ ok: true }, 200);
   } catch (err) {
     console.error('enquiry delivery failed', err);
