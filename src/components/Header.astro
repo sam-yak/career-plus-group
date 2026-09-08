@@ -5,9 +5,18 @@ import { verticalsIn } from '../data/verticals';
 ---
 <header class="header">
   <div class="wrap header__inner">
-    <a class="brand" href={url('/')}>
-      <span class="brand__name">Career Plus</span>
-      <span class="brand__sub">Group</span>
+    {/*
+      Two files, not one image scaled down. The lockup's minimum legible width is
+      220px: below that the breaks in the ring and the vertical close up and it
+      turns to mush. On a phone header there is no room for 220px next to the
+      menu button, so the mark carries it there instead, exactly as the brand
+      guidance says to do. CSS picks which one shows.
+    */}
+    <a class="brand" href={url('/')} aria-label={`${site.name}, home`}>
+      <img class="brand__lockup" src={url('/logo/careerplus-group-primary.svg')}
+           alt="" width="891" height="447" />
+      <img class="brand__mark" src={url('/logo/careerplus-mark.svg')}
+           alt="" width="256" height="256" />
     </a>
 
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>

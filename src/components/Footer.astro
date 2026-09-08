@@ -6,6 +6,10 @@ const year = new Date().getFullYear();
 ---
 <footer class="footer">
   <div class="wrap">
+    {/* Reversed version: the footer band is navy, and the primary lockup sets
+        the wordmark in navy. */}
+    <img class="footer__logo" src={url('/logo/careerplus-group-primary-reversed.svg')}
+         alt={site.name} width="891" height="447" loading="lazy" />
     <div class="footer__cols">
       {Object.values(divisions).map((d) => (
         <div>

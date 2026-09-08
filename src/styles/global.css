@@ -168,14 +168,20 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   backdrop-filter: blur(8px);
 }
 .header__inner { display: flex; align-items: center; gap: 2rem; min-height: 74px; }
-.brand { display: flex; flex-direction: column; text-decoration: none; line-height: 1.1; }
-.brand__name {
-  font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.24rem;
-  color: var(--navy); letter-spacing: 0.04em;
-}
-.brand__sub {
-  font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold); font-weight: 600; margin-top: 2px;
+/*
+ * Brand lockup. The guidance sets a 220px minimum width for the full lockup,
+ * below which the deliberate breaks in the ring and the vertical stroke close
+ * up visually. A phone header cannot give 220px to a logo and still fit a menu
+ * button, so the square mark stands in below 46rem. Both are in the markup and
+ * CSS chooses; neither is ever scaled past what it can carry.
+ */
+.brand { display: flex; align-items: center; text-decoration: none; }
+.brand__lockup { display: none; width: 232px; height: auto; }
+.brand__mark { display: block; width: 40px; height: 40px; }
+
+@media (min-width: 46rem) {
+  .brand__lockup { display: block; }
+  .brand__mark { display: none; }
 }
 
 .nav { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
@@ -424,6 +430,12 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
 }
 .partner-link:hover { border-color: var(--gold); }
 .partner-link strong { font-family: 'Cinzel', serif; color: var(--navy); }
+
+/* Reversed lockup on the navy footer band. */
+.footer__logo {
+  display: block; width: 200px; height: auto;
+  margin-bottom: 2.25rem;
+}
 
 /* ── Trust strip ─────────────────────────────────────────────────────── */
 
