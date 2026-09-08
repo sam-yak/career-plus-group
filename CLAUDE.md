@@ -205,9 +205,16 @@ The site is not indexed yet. `public/robots.txt` disallows everything and
 `Base.astro` sends `noindex`. Both come off together, and not before the enquiry
 form reaches a real inbox.
 
-The enquiry form has **no backend yet**. It validates, then logs to console and
-shows a confirmation — see the block marked `DEMO MODE` in `EnquiryForm.astro`.
-Wiring it to Formspree, Netlify Forms or a real endpoint is the next task.
+The enquiry form POSTs to `/api/enquiry`, a Cloudflare Pages Function in
+`functions/api/enquiry.ts`. It validates server-side, then sends the lead
+through Resend.
+
+Three environment variables must exist on the Pages project or the endpoint
+returns 503 and the form tells the visitor to phone instead: `RESEND_API_KEY`,
+`ENQUIRY_TO`, `ENQUIRY_FROM`.
+
+Cloudflare Email Routing cannot do this job. It receives only, and its
+`send_email` binding is a Workers binding that Pages Functions do not support.
 
 ---
 

@@ -14,6 +14,8 @@
  * comes from the verticals array) and one fieldset below. Never a new form.
  */
 import { verticals } from '../data/verticals';
+import { url } from '../lib/url';
+import { site } from '../data/site';
 
 interface Props {
   variant?: string;
@@ -44,7 +46,8 @@ const showGroup = (group: string) => !single || variant === group;
       : 'One form for the whole group. Your enquiry goes to the team that handles this specific service, usually answered the same working day.'}
   </p>
 
-  <form id="enquiry-form" novalidate data-variant={variant} data-service-label={active ? active.name : ""}>
+  <form id="enquiry-form" novalidate data-variant={variant} data-service-label={active ? active.name : ""}
+        data-endpoint={url('/api/enquiry')} data-phone={site.contact.phone}>
     <div class="form__grid">
       <div class="field">
         <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
@@ -259,7 +262,7 @@ const showGroup = (group: string) => !single || variant === group;
 
     form.addEventListener('input', clearErrors);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearErrors();
 
@@ -281,24 +284,52 @@ const showGroup = (group: string) => !single || variant === group;
         return;
       }
 
-      // ── DEMO MODE ────────────────────────────────────────────────────
-      // No backend yet. Replace this block with a POST to Formspree,
-      // Web3Forms, or your own endpoint. See README § Wiring up the form.
-      console.log('Lead captured (demo):', {
-        ...data,
-        sourcePage: window.location.pathname,
-        timestamp: new Date().toISOString(),
-      });
-      status.hidden = false;
       const serviceLabel = service
         ? (service.options[service.selectedIndex]?.text ?? '')
         : (form.dataset.serviceLabel ?? '');
-      status.textContent =
-        'Thanks. In the live site this would reach our ' +
-        serviceLabel +
-        ' team. This preview logs the enquiry to the browser console instead.';
-      form.reset();
-      syncGroups();
+
+      const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      const label = submit?.textContent ?? '';
+      if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
+      status.hidden = false;
+      status.textContent = 'Sending your enquiry…';
+
+      /*
+       * The phone number is in every failure message on purpose. If the endpoint
+       * is down or unconfigured, the visitor still has a way to reach us: a lead
+       * lost to a silent error is the one failure this form cannot have.
+       */
+      const fallback = 'Something went wrong sending this. Please call ' +
+        (form.dataset.phone || '') + ' or use WhatsApp and we will pick it up.';
+
+      try {
+        const res = await fetch(form.dataset.endpoint || '/api/enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...data,
+            serviceLabel,
+            sourcePage: window.location.pathname,
+          }),
+        });
+        const out = await res.json().catch(() => ({}));
+
+        if (res.ok && out.ok) {
+          status.textContent = 'Thank you. Your enquiry has reached our ' +
+            serviceLabel + ' team, and we will call you back on the number you gave us.';
+          form.reset();
+          syncGroups();
+        } else if (res.status === 422 && out.error) {
+          status.textContent = out.error;
+        } else {
+          status.textContent = fallback;
+        }
+      } catch {
+        status.textContent = fallback;
+      } finally {
+        if (submit) { submit.disabled = false; submit.textContent = label; }
+      }
+
       status.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }

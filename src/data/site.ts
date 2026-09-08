@@ -48,8 +48,12 @@ export const site = {
 
     whatsapp: '+91 93100 69778',
     whatsappHref: 'https://wa.me/919310069778',
-    /* TODO(client): an @careerplusgroup.org address, created in cPanel. */
-    email: 'contact@careerplusonline.com',
+    /*
+     * Cloudflare Email Routing forwards this to the group's real mailbox. Only
+     * the .org address is ever shown: the destination it forwards to is internal
+     * and must not appear in site copy.
+     */
+    email: 'contact@careerplusgroup.org',
     address: '301/A-37-38-39, Third Floor, Ansal Building Commercial Complex, Dr. Mukherjee Nagar, Delhi 110009',
     // Both 301 and 302 belong to the society and both appear on the GST
     // certificate. 301 is reception, so it is the one a visitor should be given.

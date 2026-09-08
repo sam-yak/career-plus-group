@@ -102,37 +102,28 @@ If the new line does not fit either existing division, add a third division to
 
 ---
 
-## Wiring up the form
+## The enquiry form
 
-The form currently validates properly but has no backend — a static site cannot
-receive a POST. On submit it logs the payload to the browser console and shows a
-confirmation. That is fine for showing the site internally; it is not fine for
-launch.
+The form POSTs JSON to `/api/enquiry`, handled by `functions/api/enquiry.ts`,
+which Cloudflare Pages deploys automatically from the `functions/` directory.
 
-Note that **Cloudflare Pages has no built-in form handling**. Netlify does;
-Cloudflare does not, so hosting here means picking one of these:
+It re-validates every field server-side, drops honeypot submissions with a 200,
+and sends the lead through Resend with the enquirer's address as `reply-to`.
 
-**A form service.** Formspree, Web3Forms and similar. Replace the block marked
-`DEMO MODE` in `EnquiryForm.astro` with:
+Set these on the Pages project under **Settings → Environment variables**:
 
-```js
-await fetch('https://formspree.io/f/YOUR_ID', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-  body: JSON.stringify(data),
-});
-```
+| Variable | Value |
+|---|---|
+| `RESEND_API_KEY` | secret, from resend.com |
+| `ENQUIRY_TO` | where leads land |
+| `ENQUIRY_FROM` | a sender on a domain verified in Resend |
 
-Fastest path, and the free tiers cap monthly submissions.
+Without them the endpoint returns 503 and the form shows the office number, so a
+visitor always has a way through.
 
-**A Pages Function.** Add `functions/api/enquiry.ts` to this repo and POST to
-`/api/enquiry`. Cloudflare deploys it alongside the site with no extra service
-to sign up for, but it still needs an email provider (Resend, Postmark) to
-actually deliver the message, since a Worker cannot send mail by itself.
-
-Either way, routing each enquiry to the right internal team keys on the
-`service` field the form already sends. That needs a destination per business
-line from the client before it can be built.
+Note that Cloudflare Email Routing cannot replace this. It receives mail only,
+and the `send_email` binding that can send is a Workers binding which Pages
+Functions do not support.
 
 ---
 
