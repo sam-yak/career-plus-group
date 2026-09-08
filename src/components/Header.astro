@@ -5,9 +5,15 @@ import { verticalsIn } from '../data/verticals';
 ---
 <header class="header">
   <div class="wrap header__inner">
-    <a class="brand" href={url('/')}>
-      <span class="brand__name">Career Plus</span>
-      <span class="brand__sub">Group</span>
+    {/* The mark beside the wordmark. Not the full lockup: that sets its own
+        wordmark inside the ring and would repeat the words next to it. */}
+    <a class="brand" href={url('/')} aria-label={`${site.name}, home`}>
+      <img class="brand__mark" src={url('/logo/careerplus-mark.svg')}
+           alt="" width="256" height="256" />
+      <span class="brand__text">
+        <span class="brand__name">Career Plus</span>
+        <span class="brand__sub">Group</span>
+      </span>
     </a>
 
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
