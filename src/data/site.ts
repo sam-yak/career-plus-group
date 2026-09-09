@@ -27,23 +27,22 @@ export const site = {
 
   contact: {
     /** Primary line. Used by the sticky action bar, which has room for one number. */
-    phone: '+91 11 2765 4588',
-    phoneHref: 'tel:+911127654588',
+    phone: '+91 11 3511 2202',
+    phoneHref: 'tel:+911135112202',
 
     /**
-     * The full switchboard: two Delhi landlines, then two mobiles.
+     * The full switchboard: the Delhi landline, then two mobiles.
      *
-     * careerplusonline.com lists the mobiles as "+91-11-9811069629". That is not
-     * a dialable number: 11 is the Delhi STD code, and a mobile already carries
-     * its own ten digits, so the prefixed version is twelve digits long and a
-     * tel: link built from it fails. They are written correctly here. The
-     * education site should be corrected to match.
+     * careerplusonline.com writes its mobiles with the Delhi STD code in
+     * front, in the form "+91-11-98114xxxxx". That is not a dialable number: a
+     * mobile already carries its own ten digits, so the prefixed version is
+     * twelve digits long and a tel: link built from it fails. They are written
+     * correctly here. The education site should be corrected to match.
      */
     phones: [
-      { display: '+91 11 2765 4588', href: 'tel:+911127654588' },
-      { display: '+91 11 2765 2829', href: 'tel:+911127652829' },
-      { display: '+91 98110 69629', href: 'tel:+919811069629' },
-      { display: '+91 98910 86435', href: 'tel:+919891086435' },
+      { display: '+91 11 3511 2202', href: 'tel:+911135112202' },
+      { display: '+91 98114 24443', href: 'tel:+919811424443' },
+      { display: '+91 98116 51353', href: 'tel:+919811651353' },
     ],
 
     whatsapp: '+91 93100 69778',
