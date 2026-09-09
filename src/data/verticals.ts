@@ -16,7 +16,13 @@ import type { DivisionId } from './site';
 export interface FaqItem { q: string; a: string; }
 export interface Segment { title: string; body: string; }
 export interface Step { title: string; body: string; }
-export interface Offering { title: string; body: string; }
+/**
+ * A single thing we do in this vertical. `group` is optional: set it when a
+ * vertical has enough offerings that a flat grid stops being readable, and
+ * block 4 renders them under group headings instead. Grouping follows array
+ * order, so keep a group's entries together.
+ */
+export interface Offering { title: string; body: string; group?: string; }
 export interface RequirementRow { category: string; items: string; }
 
 export interface Vertical {
@@ -61,11 +67,11 @@ export const verticals: Vertical[] = [
     name: 'Real Estate',
     division: 'realty-finserve',
     order: 1,
-    navBlurb: 'Buy · Sell · Rent · Plots',
-    cardBlurb: 'Buy, sell, rent or lease: flats, villas, plots and commercial space.',
+    navBlurb: 'Residential · Commercial · Land',
+    cardBlurb: 'Buy, sell, rent or lease: homes, shops, offices, warehouses and land.',
     heroHeading: 'Property, without the guesswork',
     heroLead:
-      'We work as a channel partner and broker across residential, commercial and land transactions: shortlisting, site visits, negotiation and document verification, end to end.',
+      'We work as a channel partner and broker across residential, commercial, retail, industrial and land transactions: shortlisting, site visits, negotiation and document verification, end to end.',
     ctaLabel: 'Tell us what you are looking for',
     formVariant: 'real-estate',
 
@@ -73,6 +79,7 @@ export const verticals: Vertical[] = [
     segments: [
       { title: 'Buyers', body: 'First-time and repeat buyers looking at ready-to-move or under-construction homes.' },
       { title: 'Sellers & landlords', body: 'Owners who want their property placed with genuine, verified buyers and tenants.' },
+      { title: 'Businesses', body: 'Companies taking office, retail or warehouse space, on purchase or on lease.' },
       { title: 'Investors', body: 'Plot, land and commercial buyers looking at yield and appreciation rather than occupancy.' },
       { title: 'NRIs', body: 'Overseas buyers who need someone on the ground for paperwork, power of attorney and site checks.' },
     ],
@@ -87,12 +94,18 @@ export const verticals: Vertical[] = [
 
     offeringsTitle: 'What we handle',
     offerings: [
-      { title: 'Residential', body: 'Flats, villas and independent houses: ready-to-move and under-construction.' },
-      { title: 'Commercial', body: 'Shops, offices and warehousing, for purchase or long-term lease.' },
-      { title: 'Plots & land', body: 'Approved layouts and open land, with title and zoning verification.' },
-      { title: 'Rentals & leasing', body: 'Tenant sourcing, agreement drafting and police verification support.' },
-      { title: 'Document verification', body: 'Title, encumbrance and approval checks before you commit money.' },
-      { title: 'Loan coordination', body: 'Home loan and loan-against-property arranged through Fin-Serve.' },
+      { group: 'Property types', title: 'Residential', body: 'Flats, villas and independent houses, ready to move or under construction.' },
+      { group: 'Property types', title: 'Commercial', body: 'Offices, IT space and co-working floors, for purchase or long-term lease.' },
+      { group: 'Property types', title: 'Retail', body: 'Shops, showrooms, high-street units and mall space, sized to the footfall you need.' },
+      { group: 'Property types', title: 'Industrial & warehousing', body: 'Warehouses, logistics sheds, godowns and manufacturing units.' },
+      { group: 'Property types', title: 'Plots & land', body: 'Approved layouts and open land, with title and zoning verification.' },
+      { group: 'Property types', title: 'Special purpose', body: 'Hotels, schools, hospitals and other single-use buildings, where the buyer is usually the operator.' },
+
+      { group: 'Services', title: 'Buying & selling', body: 'Shortlisting, site visits, negotiation and closing, on either side of the table.' },
+      { group: 'Services', title: 'Rentals & leasing', body: 'Tenant sourcing, agreement drafting and police verification support.' },
+      { group: 'Services', title: 'Property management', body: 'Rent collection, tenant coordination and upkeep, for owners who live elsewhere.' },
+      { group: 'Services', title: 'Document verification', body: 'Title, encumbrance and approval checks before you commit money.' },
+      { group: 'Services', title: 'Loan coordination', body: 'Home loan and loan-against-property arranged through Fin-Serve.' },
     ],
 
     requirementsTitle: 'Documents typically required',
@@ -105,6 +118,7 @@ export const verticals: Vertical[] = [
       { category: 'Society / apartment', items: 'Share certificate, maintenance agreement, society NOC' },
       { category: 'Rent & lease', items: 'Tenant ID and address proof, registered agreement, deposit receipt, police verification' },
       { category: 'Plots & land', items: 'Revenue record, conversion certificate, zoning certificate, survey sketch, layout approval' },
+      { category: 'Commercial & industrial', items: 'Change of land use or conversion order, trade licence, fire safety NOC, pollution board consent for industrial use' },
       { category: 'NRI-specific', items: 'Passport, OCI or PIO card, Power of Attorney if transacting remotely, overseas address proof' },
       { category: 'Transaction', items: 'Agreement to Sell, allotment letter, payment receipts, possession letter' },
     ],
@@ -122,6 +136,7 @@ export const verticals: Vertical[] = [
       { q: 'Is RERA registration mandatory for the property I am buying?', a: 'For most new and under-construction projects above the size threshold set by your state, yes. Resale of a completed, older property does not carry a live RERA number. If a project should have one and does not, treat that as a serious warning.' },
       { q: 'What extra documents does an NRI need?', a: 'Beyond the standard set: a valid passport, OCI or PIO card, overseas address proof, and, if you are not present for registration, a properly executed and attested Power of Attorney. Repatriation of sale proceeds also has its own compliance requirements.' },
       { q: 'Can you verify property documents before I commit?', a: 'Yes, and we recommend it. Title chain, encumbrance certificate, approvals and tax status are checked before any token amount is paid.' },
+      { q: 'Do you handle commercial and industrial property, or only homes?', a: 'Both. Residential is the largest share of what we do, but we also place shops, showrooms, offices, warehouses and industrial units, on purchase and on lease. The transaction runs the same way; the approvals differ, and we tell you which ones apply to your property before you start.' },
       { q: 'Do you charge the buyer, the seller, or both?', a: 'It depends on the transaction type. For developer projects we are paid by the developer. For resale and rentals, brokerage terms are agreed in writing before we begin. You will never be surprised by a fee.' },
     ],
   },
@@ -132,8 +147,8 @@ export const verticals: Vertical[] = [
     name: 'Loans & Finance',
     division: 'realty-finserve',
     order: 2,
-    navBlurb: 'Personal · Business · OD',
-    cardBlurb: 'Personal, business, corporate and project finance arranged through our partner banks and NBFCs.',
+    navBlurb: 'Home · Personal · Business · Trade',
+    cardBlurb: 'Home, personal, business, trade and project finance arranged through our partner banks and NBFCs.',
     heroHeading: 'The lender whose policy fits your profile',
     heroLead:
       'We are a loan facilitator. We understand your requirement, match it to a partner bank or NBFC whose policy actually fits your profile, and manage the file through to disbursal.',
@@ -145,6 +160,7 @@ export const verticals: Vertical[] = [
       { title: 'Salaried individuals', body: 'Personal loans against salary, and home loans for property purchase.' },
       { title: 'Small businesses & MSMEs', body: 'Working capital, machinery finance and overdraft limits.' },
       { title: 'Companies', body: 'Structured corporate facilities, trade finance and bank guarantees.' },
+      { title: 'Importers & exporters', body: 'Traders who need letters of credit, guarantees and cash against unpaid invoices.' },
       { title: 'Project promoters', body: 'Milestone-linked finance for construction and plant setup.' },
     ],
 
@@ -158,12 +174,24 @@ export const verticals: Vertical[] = [
 
     offeringsTitle: 'The products we arrange',
     offerings: [
-      { title: 'Personal loan', body: 'Unsecured, income-based, no collateral. The fastest product to disburse.' },
-      { title: 'Business loan', body: 'Working capital and expansion finance for MSMEs, often collateral-free.' },
-      { title: 'Corporate loan', body: 'Larger structured facilities: term loans, letters of credit, bank guarantees.' },
-      { title: 'OD limit', body: 'A sanctioned ceiling you draw against. Interest only on what you actually use.' },
-      { title: 'Project loan', body: 'Tied to one specific project, disbursed in tranches against milestones.' },
-      { title: 'Loan against property', body: 'Secured borrowing against property you already own, coordinated with our Realty team.' },
+      { group: 'Personal & retail finance', title: 'Personal loan', body: 'Unsecured, income-based, no collateral. The fastest product to disburse.' },
+      { group: 'Personal & retail finance', title: 'Home loan', body: 'Secured finance to buy, build or renovate a home, coordinated with our Realty team.' },
+      { group: 'Personal & retail finance', title: 'Vehicle loan', body: 'Cars and two-wheelers, new or used, against the vehicle itself as security.' },
+      { group: 'Personal & retail finance', title: 'Education loan', body: 'Tuition, living costs and travel, with our Study Abroad team on the same file.' },
+      { group: 'Personal & retail finance', title: 'Loan against property', body: 'Secured borrowing against property you already own, at rates below an unsecured loan.' },
+
+      { group: 'Business & commercial lending', title: 'Business term loan', body: 'A fixed amount for expansion or a capital purchase, repaid on a set schedule.' },
+      { group: 'Business & commercial lending', title: 'Working capital loan', body: 'Short-term cover for payroll, rent and stock while your receivables come in.' },
+      { group: 'Business & commercial lending', title: 'Machinery & equipment finance', body: 'Finance tied to the specific tools, plant or hardware you are buying.' },
+      { group: 'Business & commercial lending', title: 'Project loan', body: 'Tied to one specific project, disbursed in tranches against milestones.' },
+      { group: 'Business & commercial lending', title: 'Corporate facility', body: 'Larger structured borrowing for established companies, appraised on audited financials.' },
+
+      { group: 'Trade & cash flow finance', title: 'Overdraft & cash credit', body: 'A sanctioned ceiling you draw against. Interest only on what you use, for the days you use it.' },
+      { group: 'Trade & cash flow finance', title: 'Invoice & bill discounting', body: 'Cash against invoices you have raised but have not yet been paid for.' },
+      { group: 'Trade & cash flow finance', title: 'Letter of credit & bank guarantee', body: 'Bank-backed undertakings for import, export and contract work.' },
+
+      { group: 'Government schemes & niche products', title: 'Government scheme loans', body: 'MUDRA and other subsidised or government-backed schemes, through participating banks.' },
+      { group: 'Government schemes & niche products', title: 'Merchant cash advance', body: 'Finance sized against your daily card and POS collections, repaid as a share of them.' },
     ],
 
     requirementsTitle: 'Documents by loan type',
@@ -171,10 +199,15 @@ export const verticals: Vertical[] = [
       'All applications require standard KYC: PAN, Aadhaar or passport, address proof and photographs. The table below lists what each product needs in addition.',
     requirements: [
       { category: 'Personal loan', items: 'Salary slips (3–6 months), bank statements showing salary credits, Form 16 or ITR, employee ID or appointment letter' },
-      { category: 'Business loan', items: 'GST returns, 6–12 months business bank statements, business registration or licence, ITR (2–3 years)' },
+      { category: 'Home loan', items: 'Sale agreement or allotment letter, chain of title documents, approved building plan, own contribution proof, income documents as above' },
+      { category: 'Vehicle loan', items: 'Dealer quotation or proforma invoice, driving licence, income proof; for a used vehicle, the RC and a valuation report' },
+      { category: 'Education loan', items: 'Admission or offer letter, fee structure from the institution, academic records, co-applicant income proof, collateral documents above the unsecured limit' },
+      { category: 'Business & working capital', items: 'GST returns, 6–12 months business bank statements, business registration or licence, ITR (2–3 years)' },
       { category: 'Corporate loan', items: 'Audited financials, board resolution, MOA and AOA, GST and ITR filings, turnover projections' },
-      { category: 'OD limit', items: 'Current account statements, GST returns, turnover proof, collateral documents if secured' },
+      { category: 'Overdraft & cash credit', items: 'Current account statements, GST returns, turnover proof, stock and receivables statement, collateral documents if secured' },
+      { category: 'Trade finance', items: 'Buyer or supplier contract, unpaid invoices with proof of delivery, import or export code, shipping documents' },
       { category: 'Project loan', items: 'Detailed Project Report (DPR), cost estimates, statutory approvals, promoter contribution proof' },
+      { category: 'Loan against property', items: 'Title deed, encumbrance certificate, approved plan, latest property tax receipt, valuation report' },
       { category: 'Self-employed (any product)', items: 'ITR (2–3 years), audited P&L and balance sheet, business bank statements (6 months), registration proof' },
     ],
 
@@ -187,6 +220,7 @@ export const verticals: Vertical[] = [
     ],
 
     faqs: [
+      { q: 'Which loans can you arrange?', a: 'On the retail side: personal, home, vehicle and education loans, and loan against property. For businesses: term loans, working capital, machinery finance, overdraft and cash credit, and project finance. For traders: letters of credit, bank guarantees and invoice discounting. For small enterprises, government-backed schemes such as MUDRA. If the product you need is missing from that list, tell us anyway and we will say whether one of our partner lenders offers it.' },
       { q: 'What is the difference between a business loan and an OD limit?', a: 'A business loan gives you the full amount upfront and you pay interest on all of it from day one. An OD limit is a sanctioned ceiling: you draw only what you need, when you need it, and pay interest only on the amount used and only for the days it is outstanding. OD suits fluctuating cash-flow gaps; a term loan suits a one-time purchase.' },
       { q: 'Does Career Plus lend the money?', a: 'No. We are a loan facilitator. The loan is sanctioned and disbursed by a partner bank or NBFC, under their terms and their credit policy. Our role is matching, documentation and follow-through.' },
       { q: 'What credit score do I need?', a: 'A CIBIL score above 750 makes approval considerably easier and usually gets you a better rate. Applications below 700 are harder but not automatically rejected. The lender, product and your income profile all matter.' },

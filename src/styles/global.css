@@ -395,6 +395,24 @@ a { color: var(--navy); text-decoration-color: var(--gold); text-underline-offse
   color: var(--ink-soft); font-weight: 600; margin-top: 1rem;
 }
 
+/*
+ * Block 4's group headings, used when a vertical's offerings carry a `group`.
+ * Deliberately set in the body face rather than Cinzel: it is a label dividing
+ * one grid, and a second display serif under the h2 reads as a second section.
+ */
+.offer-group + .offer-group { margin-top: 2.75rem; }
+.offer-group__title {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--line);
+}
+
 /* Division colour accent on the service cards */
 .card[data-division='realty-finserve'] { border-top: 3px solid var(--gold); }
 .card[data-division='hospitality-services'] { border-top: 3px solid var(--navy); }

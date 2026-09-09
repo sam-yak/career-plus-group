@@ -101,8 +101,10 @@ const showGroup = (group: string) => !single || variant === group;
           <div class="field">
             <label for="re-type">Property type</label>
             <select id="re-type" name="propertyType">
-              <option>Flat / apartment</option><option>Villa</option>
-              <option>Plot / land</option><option>Commercial</option>
+              <option>Flat / apartment</option><option>Villa or independent house</option>
+              <option>Plot / land</option><option>Shop or showroom</option>
+              <option>Office space</option><option>Warehouse or industrial unit</option>
+              <option>Other</option>
             </select>
           </div>
           <div class="field">
@@ -123,9 +125,23 @@ const showGroup = (group: string) => !single || variant === group;
           <div class="field">
             <label for="loan-type">Loan type</label>
             <select id="loan-type" name="loanType">
-              <option>Personal loan</option><option>Business loan</option>
-              <option>Corporate loan</option><option>OD limit</option>
-              <option>Project loan</option><option>Loan against property</option>
+              <optgroup label="Personal & retail">
+                <option>Personal loan</option><option>Home loan</option>
+                <option>Vehicle loan</option><option>Education loan</option>
+                <option>Loan against property</option>
+              </optgroup>
+              <optgroup label="Business">
+                <option>Business term loan</option><option>Working capital loan</option>
+                <option>Machinery or equipment finance</option><option>Project loan</option>
+                <option>Corporate facility</option>
+              </optgroup>
+              <optgroup label="Trade &amp; cash flow">
+                <option>Overdraft or cash credit</option><option>Invoice discounting</option>
+                <option>Letter of credit or bank guarantee</option>
+              </optgroup>
+              <optgroup label="Schemes">
+                <option>Government scheme loan</option><option>Merchant cash advance</option>
+              </optgroup>
             </select>
           </div>
           <div class="field">

@@ -9,12 +9,33 @@
  */
 import { url } from '../lib/url';
 import { divisions } from '../data/site';
-import { notation, type Vertical } from '../data/verticals';
+import { notation, type Offering, type Vertical } from '../data/verticals';
 import EnquiryForm from './EnquiryForm.astro';
 
 interface Props { vertical: Vertical; }
 const { vertical: v } = Astro.props;
 const division = divisions[v.division];
+
+/*
+ * Block 4 renders as one flat grid until a vertical's offerings carry a
+ * `group`, at which point it renders under group headings instead. Real estate
+ * and loans both have a product list long enough that an ungrouped grid stops
+ * being scannable; the other lines have six cards and want no headings.
+ *
+ * Grouping is order-preserving rather than sorted, so the array's sequence is
+ * the page's sequence and a new product lands exactly where it is written.
+ */
+const offeringGroups = v.offerings.some((o) => o.group)
+  ? v.offerings.reduce<{ title: string; items: Offering[] }[]>((acc, o) => {
+      const title = o.group ?? '';
+      const last = acc[acc.length - 1];
+      if (last && last.title === title) last.items.push(o);
+      else acc.push({ title, items: [o] });
+      return acc;
+    }, [])
+  : null;
+/** Card titles drop a level when a group heading sits above them. */
+const OfferingTitle = offeringGroups ? 'h4' : 'h3';
 ---
 
 {/* 1 ── Hero */}
@@ -81,14 +102,28 @@ const division = divisions[v.division];
         <p class="eyebrow">Services</p>
         <h2>{v.offeringsTitle}</h2>
       </div>
-      <div class="grid grid--3">
-        {v.offerings.map((o) => (
-          <div class="card">
-            <h3 style="font-size:1.15rem">{o.title}</h3>
-            <p class="card__body">{o.body}</p>
+      {offeringGroups ? offeringGroups.map((g) => (
+        <div class="offer-group">
+          <h3 class="offer-group__title">{g.title}</h3>
+          <div class="grid grid--3">
+            {g.items.map((o) => (
+              <div class="card">
+                <OfferingTitle style="font-size:1.15rem">{o.title}</OfferingTitle>
+                <p class="card__body">{o.body}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )) : (
+        <div class="grid grid--3">
+          {v.offerings.map((o) => (
+            <div class="card">
+              <h3 style="font-size:1.15rem">{o.title}</h3>
+              <p class="card__body">{o.body}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   </section>
 )}
