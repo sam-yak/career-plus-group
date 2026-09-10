@@ -151,11 +151,20 @@ export const site = {
   story: {
     registered: 'December 1998',
     registrar: 'Registrar of Societies, Delhi',
-    // Awards belong to the society and its president, and are named with the
-    // year and the awarding body so a reader can check them.
+    /*
+     * Awards belong to the society and its president, and are named with the
+     * year and the awarding body so a reader can check them. `article` is the
+     * word the sentence on /about needs in front of the name, so an entry that
+     * is not a named prize reads correctly in the run of the list.
+     *
+     * There are more of them. Three is the number a leadership bio carries
+     * before it reads as a trophy cabinet; the rest wait for an honours block
+     * of their own.
+     */
     awards: [
-      { name: 'Karmaveer Chakra', year: 2012, by: 'International Confederation of NGOs' },
-      { name: 'JP Award', year: 2019, by: 'for social service' },
+      { name: 'Karmaveer Chakra', article: 'the', year: 2012, by: 'International Confederation of NGOs' },
+      { name: 'honorary doctorate from Techno India University', article: 'an', year: 2018, by: 'Techno India University, Kolkata' },
+      { name: 'JP Award', article: 'the', year: 2019, by: 'for social service' },
     ],
   },
 
@@ -186,7 +195,9 @@ export const site = {
         name: 'Anuj Kumar Agrawal',
         title: 'Chairman and Managing Director',
         bio: [
-          `Anuj Kumar Agrawal has led ${PARENT} since 1998. He is an educationist and journalist, edits Dialogue India, and serves as national president of the Maulik Bharat trust.`,
+          `Anuj Kumar Agrawal has led ${PARENT} since 1998. He is an educationist, journalist and career counsellor, edits the news analysis portal Dialogue India and the career portal Dialogue India Academia, and serves as national president of the Maulik Bharat trust. He appears regularly as a panellist in national news debates and speaks at seminars and conferences through the year.`,
+          'At the society he built the coaching operation the group takes its name from: civil services and state services preparation, Group A, B and C coaching, and engineering services, GATE and PSU coaching. He opened civil services coaching to students of science, commerce, economics and literature, which widened the range of backgrounds that reach a final selection. A large part of the work is free coaching for students from Scheduled Caste, Scheduled Tribe, Other Backward Class, minority and disabled communities and from Economically Weaker Section and Below Poverty Line households, run with the Ministry of Minority Affairs, the Ministry of Social Justice and Empowerment, the Department of Empowerment of Persons with Disabilities and the governments of Uttar Pradesh, Uttarakhand, Chhattisgarh, Madhya Pradesh, Jharkhand and Delhi.',
+          'He founded Dialogue India in 2009, now a Hindi news monthly and an English career magazine, published digitally, with its two portals alongside. Its higher education programme, the Dialogue India Academia ranking, awards and conclave, ran from 2009 to 2023. In 2013 he brought that work together as Maulik Bharat, a movement now active in 18 states on election reform, governance and public accountability, and he is its national president.',
         ],
         societyAwards: true,
       },
