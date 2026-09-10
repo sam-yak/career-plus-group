@@ -104,18 +104,20 @@ import { verticalsIn, notation } from '../data/verticals';
           </ul>
         </div>
         <div class="prose stack">
-          <p>
-            {site.leadership.people[0].name} has led {site.parent} since
-            {' '}{site.leadership.presidentSince}. He is an educationist and
-            journalist, edits Dialogue India, and serves as national president of
-            the Maulik Bharat trust.
-          </p>
-          <p>
-            His work has been recognised with the
-            {site.story.awards.map((a, i) => (
-              <span>{i > 0 ? ' and the ' : ' '}<strong>{a.name}</strong> in {a.year}</span>
-            ))}, the first awarded by the International Confederation of NGOs.
-          </p>
+          {site.leadership.people.map((person) => (
+            <div class="stack leader">
+              <h3>{person.name}</h3>
+              {person.bio.map((para) => <p>{para}</p>)}
+              {person.societyAwards && (
+                <p>
+                  His work has been recognised with the
+                  {site.story.awards.map((a, i) => (
+                    <span>{i > 0 ? ' and the ' : ' '}<strong>{a.name}</strong> in {a.year}</span>
+                  ))}, the first awarded by the International Confederation of NGOs.
+                </p>
+              )}
+            </div>
+          ))}
           <p>
             The same people who built the classroom operation run the group. That
             is the point of the structure: a family that has answered to students

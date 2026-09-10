@@ -12,11 +12,24 @@
  * the society's record, and it is framed that way wherever it appears.
  */
 const FOUNDED = 1996;
+
+/** Named once: the bios below quote it, and so does `site.parent`. */
+const PARENT = 'Career Plus Educational Society';
 const yearsActive = new Date().getFullYear() - FOUNDED;
+
+/** One member of the leadership pair, as rendered on /about. */
+interface Leader {
+  name: string;
+  title: string;
+  /** Rendered as one paragraph each, in order. */
+  bio: string[];
+  /** Set on the person the awards in `story.awards` were given to. */
+  societyAwards?: boolean;
+}
 
 export const site = {
   name: 'Career Plus Group',
-  parent: 'Career Plus Educational Society',
+  parent: PARENT,
   tagline: 'Property, finance, education and travel, under one roof.',
   positioning:
     'A group of advisory businesses that know which lender, which builder and which university fits a given profile, and stay with you until it is done.',
@@ -160,12 +173,32 @@ export const site = {
     photo: '/logos/leadership.jpg',
     /* Alt text names them left to right, matching how they stand in the frame. */
     photoAlt: 'Neeraj Kushwaha, left, and Anuj Kumar Agrawal, right',
+    /**
+     * Both bios live here rather than in `about.astro` so neither man is the
+     * one the template happens to hardcode. Add a third leader and the page
+     * renders them without a developer touching the markup.
+     *
+     * Both have held their posts since 1998. Anuj's tenure is sourced from
+     * careerplusonline.com; Neeraj's is the client's own text.
+     */
     people: [
-      { name: 'Anuj Kumar Agrawal', title: 'Chairman and Managing Director' },
-      { name: 'Neeraj Kushwaha', title: 'Secretary and Managing Director' },
-    ],
-    /** Anuj has led the society since 1998. Sourced from careerplusonline.com. */
-    presidentSince: 1998,
+      {
+        name: 'Anuj Kumar Agrawal',
+        title: 'Chairman and Managing Director',
+        bio: [
+          `Anuj Kumar Agrawal has led ${PARENT} since 1998. He is an educationist and journalist, edits Dialogue India, and serves as national president of the Maulik Bharat trust.`,
+        ],
+        societyAwards: true,
+      },
+      {
+        name: 'Neeraj Kushwaha',
+        title: 'Secretary and Managing Director',
+        bio: [
+          `Neeraj Kushwaha has been secretary of ${PARENT} since 1998, and has spent more than three decades in social empowerment and grassroots development. Under his leadership the society works to bring Dalit, Tribal, Backward and Minority communities into the mainstream, through vocational education, competitive examination coaching, skill development and career mentorship.`,
+          'He oversees operations across the state centres so that training standards hold from one to the next, and works with ministries of the Government of India and state departments to run large-scale welfare projects. He also holds leadership roles at the M.L.K. Educational Charitable Trust, the Neelkanth Resident Welfare Society and Dialogue India magazine.',
+        ],
+      },
+    ] satisfies Leader[],
   },
 
   howItWorks: [
